@@ -268,24 +268,24 @@ const COURSES = [
    desc:"Aplicaciones web completas: la parte del navegador, la del servidor, el diseño de la interfaz y su puesta en producción.",
    modules:[
      {c:"0612", n:"Desarrollo web en entorno cliente", u:[
-       ["Arquitecturas y herramientas de programación", []],
+       ["Arquitecturas y herramientas de programación", ["arquitectura-web-dev"]],
        ["Sintaxis del lenguaje", ["javascript"]],
-       ["Objetos predefinidos del lenguaje", []],
-       ["Arrays, funciones y objetos propios", []],
-       ["Eventos y formularios", []],
-       ["Modelo de objetos del documento (DOM)", []],
-       ["Comunicación asíncrona", []]
+       ["Objetos predefinidos del lenguaje", ["js-objetos"]],
+       ["Arrays, funciones y objetos propios", ["js-arrays-funciones"]],
+       ["Eventos y formularios", ["js-eventos"]],
+       ["Modelo de objetos del documento (DOM)", ["js-dom"]],
+       ["Comunicación asíncrona", ["js-async"]]
      ]},
      {c:"0613", n:"Desarrollo web en entorno servidor", u:[
-       ["Arquitecturas y herramientas de programación", []],
+       ["Arquitecturas y herramientas de programación", ["arquitectura-web-dev"]],
        ["Inserción de código en páginas web", ["php-servidor"]],
        ["Lenguajes de marcas con código embebido", ["php-servidor"]],
-       ["Aplicaciones web con código embebido", []],
-       ["Generación dinámica de páginas web", []],
+       ["Aplicaciones web con código embebido", ["php-sesiones"]],
+       ["Generación dinámica de páginas web", ["php-mvc"]],
        ["Acceso a datos", ["php-bd"]],
        ["Servicios web", ["api-rest"]],
-       ["Páginas web interactivas", []],
-       ["Aplicaciones web híbridas", []]
+       ["Páginas web interactivas", ["js-async"]],
+       ["Aplicaciones web híbridas", ["apis-terceros"]]
      ]},
      {c:"0614", n:"Despliegue de aplicaciones web", u:[
        ["Arquitecturas web", ["servidores-aplicaciones"]],
@@ -296,11 +296,11 @@ const COURSES = [
        ["Documentación y control de versiones", ["entornos"]]
      ]},
      {c:"0615", n:"Diseño de interfaces web", u:[
-       ["Planificación de interfaces gráficas", []],
+       ["Planificación de interfaces gráficas", ["diseno-planificacion"]],
        ["Uso de estilos (CSS)", ["css"]],
-       ["Contenido multimedia", []],
-       ["Contenido interactivo", []],
-       ["Diseño de webs accesibles", []],
+       ["Contenido multimedia", ["multimedia-web"]],
+       ["Contenido interactivo", ["web-interactiva"]],
+       ["Diseño de webs accesibles", ["accesibilidad-web"]],
        ["Usabilidad y diseño amigable", ["usabilidad"]]
      ]}
    ]}
