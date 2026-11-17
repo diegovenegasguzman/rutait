@@ -91,6 +91,19 @@ button{font:inherit;cursor:pointer;color:inherit}
 .stn::before{content:"";position:absolute;left:-49px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--white);border:5px solid var(--c)}
 .stn.full::before{background:var(--c)}
 .stn h3{font-family:var(--display);font-size:22px;letter-spacing:-.015em;line-height:1.25}
+.mcode{font-size:13px;font-weight:700;color:var(--ink3)}
+.mprog{font-size:14px;color:var(--ink3);margin:2px 0 10px}
+.units{list-style:none;display:grid;gap:8px;margin-top:4px}
+.unit{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:10px 14px}
+.unit:not(.has){background:transparent;border-style:dashed}
+.uh{display:flex;align-items:center;gap:10px}
+.un{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:700;background:var(--paper);color:var(--ink2)}
+.unit.has .un{background:var(--c);color:#fff}
+.ut{font-weight:700;font-size:15.5px;line-height:1.3}
+.unit:not(.has) .ut{color:var(--ink2);font-weight:400}
+.up{margin-left:auto;font-size:12.5px;color:var(--ink3);white-space:nowrap}
+.unit .temas{margin:10px 0 2px 34px}
+.src{color:var(--ink3);font-size:14px;margin:28px 0 0 56px;max-width:70ch}
 .stn .empty{color:var(--ink3);font-size:15px;margin-top:4px}
 .temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:12px}
 .tcard{background:var(--white);border:1px solid var(--rule);border-radius:16px;padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;gap:4px}
@@ -322,8 +335,10 @@ const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(P)); }catch(e
 const course = id => COURSES.find(c => c.id === id);
 const color = c => `var(--${c.id})`;
 function courseStats(c){
-  const ids = [...new Set(c.modules.flatMap(m => m.t))];
-  return {total:ids.length, done:ids.filter(t => (P.best[t]||0) >= PASS).length};
+  const ids = [...new Set(c.modules.flatMap(m => m.t))].filter(t => TEMAS[t]);
+  const units = c.modules.reduce((a,m)=>a+m.u.length,0);
+  const ready = c.modules.reduce((a,m)=>a+m.u.filter(u=>u[1].some(t=>TEMAS[t])).length,0);
+  return {total:ids.length, done:ids.filter(t => (P.best[t]||0) >= PASS).length, units, ready};
 }
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -378,7 +393,7 @@ function viewHome(){
     const s = courseStats(c);
     return `<a class="ccard" href="#curso-${c.id}" style="--cc:${color(c)}">
       <b>${c.short}</b><span>${c.name}</span>
-      <small>${s.done ? `${s.done} de ${s.total} temas superados` : `${c.modules.length} módulos, ${s.total} temas`}</small></a>`;
+      <small>${s.done ? `${s.done} de ${s.total} temas superados` : `${c.modules.length} módulos, ${s.ready} de ${s.units} unidades con apuntes`}</small></a>`;
   }).join("");
   return `<div class="wrap">
     <section class="hero">
@@ -421,9 +436,15 @@ function temaStatus(id){
 
 function viewCourse(c){
   const s = courseStats(c);
-  const html = c.modules.map(m => `<div class="stn ${m.t.length?"full":""}"><h3>${m.n}</h3>` + (m.t.length
-      ? `<div class="temas">${m.t.map(t=>`<a class="tcard" href="#tema-${t}"><b>${TEMAS[t].title}</b><span>${TEMAS[t].sections.length} apartados, ${TEMAS[t].mins} min de lectura, test de ${TEMAS[t].quiz.length} preguntas</span>${temaStatus(t)}</a>`).join("")}</div>`
-      : `<p class="empty">Apuntes en preparación.</p>`) + `</div>`).join("");
+  const tcard = t => `<a class="tcard" href="#tema-${t}"><b>${TEMAS[t].title}</b><span>${TEMAS[t].sections.length} apartados, ${TEMAS[t].mins} min, test de ${TEMAS[t].quiz.length} preguntas</span>${temaStatus(t)}</a>`;
+  const html = c.modules.map(m => {
+    const units = m.u.map((u,i) => {
+      const ts = u[1].filter(t => TEMAS[t]);
+      return `<li class="unit ${ts.length ? "has" : ""}"><div class="uh"><span class="un">${i+1}</span><span class="ut">${u[0]}</span>${ts.length ? "" : `<span class="up">En preparación</span>`}</div>${ts.length ? `<div class="temas">${ts.map(tcard).join("")}</div>` : ""}</li>`;
+    }).join("");
+    const done = m.u.filter(u => u[1].some(t => TEMAS[t])).length;
+    return `<div class="stn ${done?"full":""}"><div class="mcode">Módulo ${m.c}</div><h3>${m.n}</h3><p class="mprog">${done} de ${m.u.length} unidades con apuntes</p><ol class="units">${units}</ol></div>`;
+  }).join("");
   const other = COURSES.find(o => o.family===c.family && o.id!==c.id);
   return `<div class="wrap">
     <section class="chead">
@@ -431,10 +452,11 @@ function viewCourse(c){
       <div class="grade">${c.year} de ${c.family}, ${c.grade.toLowerCase()}</div>
       <h1>${c.name}</h1>
       <p>${c.desc}</p>
-      <div class="cprog"><div class="track"><i style="width:${s.total? s.done/s.total*100 : 0}%"></i></div>${s.done} de ${s.total} temas superados</div>
+      <div class="cprog"><div class="track"><i style="width:${s.units? s.ready/s.units*100 : 0}%"></i></div>${s.ready} de ${s.units} unidades del temario con apuntes. ${s.done} de ${s.total} temas superados.</div>
     </section>
     <div class="line">${html}</div>
     ${other ? `<p style="margin:36px 0 0 56px"><a class="btn line2" href="#curso-${other.id}">Ir a ${other.short}</a></p>` : ""}
+    <p class="src">Temario basado en los contenidos básicos del real decreto de cada título. Tu centro o tu comunidad autónoma pueden ampliarlo u ordenarlo de otra forma.</p>
   </div>`;
 }
 
