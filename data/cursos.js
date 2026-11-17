@@ -5,11 +5,11 @@
 
 const LM = {c:"0373", n:"Lenguajes de marcas y sistemas de gestión de información", u:[
   ["Características de los lenguajes de marcas", ["html-xml"]],
-  ["Lenguajes de marcas en entornos web", []],
-  ["Sindicación de contenidos (RSS y Atom)", []],
+  ["Lenguajes de marcas en entornos web", ["html5"]],
+  ["Sindicación de contenidos (RSS y Atom)", ["sindicacion"]],
   ["Esquemas y vocabularios XML: DTD y XSD", ["dtd-xsd"]],
-  ["Conversión y adaptación de documentos XML (XPath y XSLT)", []],
-  ["Almacenamiento de información en XML", []],
+  ["Conversión y adaptación de documentos XML (XPath y XSLT)", ["xpath-xslt"]],
+  ["Almacenamiento de información en XML", ["xquery"]],
   ["Sistemas de gestión empresarial", ["erp"]]
 ]};
 
@@ -26,11 +26,11 @@ const COMUN_DAM_DAW = [
     ["Gestión de bases de datos relacionales desde el programa", []]
   ]},
   {c:"0484", n:"Bases de datos", u:[
-    ["Almacenamiento de la información", []],
+    ["Almacenamiento de la información", ["almacenamiento-info"]],
     ["Bases de datos relacionales y modelo E-R", ["modelo-er"]],
     ["Realización de consultas", ["bd-sql","sql-avanzado"]],
-    ["Tratamiento de datos", []],
-    ["Programación de bases de datos", []]
+    ["Tratamiento de datos", ["edicion-datos"]],
+    ["Programación de bases de datos", ["guiones-sql"]]
   ]},
   {c:"0483", n:"Sistemas informáticos", u:[
     ["Explotación de sistemas microinformáticos", ["hardware"]],
@@ -61,15 +61,15 @@ const COURSES = [
        ["Análisis del mercado de componentes", []],
        ["Ensamblado de equipos", []],
        ["Medición de parámetros eléctricos", []],
-       ["Mantenimiento de equipos", ["diagnostico"]],
+       ["Mantenimiento de equipos", ["diagnostico","copias-imagenes"]],
        ["Instalación de software", []],
        ["Nuevas tendencias en equipos informáticos", []],
        ["Mantenimiento de periféricos", []],
-       ["Prevención de riesgos laborales y protección ambiental", []]
+       ["Prevención de riesgos laborales y protección ambiental", ["prl"]]
      ]},
      {c:"0222", n:"Sistemas operativos monopuesto", u:[
        ["Caracterización de sistemas operativos", ["so"]],
-       ["Operación de sistemas de archivos", []],
+       ["Operación de sistemas de archivos", ["gestion-almacenamiento"]],
        ["Instalación de sistemas operativos libres y propietarios", ["instalacion-so"]],
        ["Tareas básicas en sistemas operativos", ["linux-comandos"]],
        ["Administración de los sistemas operativos", ["procesos-memoria"]],
@@ -78,9 +78,9 @@ const COURSES = [
      {c:"0225", n:"Redes locales", u:[
        ["Despliegue del cableado", ["cableado"]],
        ["Interconexión de equipos en redes locales", ["osi"]],
-       ["Instalación y configuración de los equipos de red", []],
-       ["Resolución de incidencias en una red local", []],
-       ["Prevención de riesgos laborales y protección ambiental", []]
+       ["Instalación y configuración de los equipos de red", ["switching","routers"]],
+       ["Resolución de incidencias en una red local", ["integracion-red"]],
+       ["Prevención de riesgos laborales y protección ambiental", ["prl"]]
      ]},
      {c:"0223", n:"Aplicaciones ofimáticas", u:[
        ["Instalación de aplicaciones", []],
@@ -90,7 +90,7 @@ const COURSES = [
        ["Manipulación de vídeos", []],
        ["Elaboración de presentaciones", []],
        ["Gestión de correo y agenda electrónica", []],
-       ["Técnicas de soporte al usuario", []]
+       ["Técnicas de soporte al usuario", ["soporte-incidencias"]]
      ]}
    ]},
   {id:"smr2", short:"2º SMR", family:"SMR", name:"Sistemas Microinformáticos y Redes", grade:"Grado medio", year:"Segundo curso",
@@ -98,14 +98,14 @@ const COURSES = [
    modules:[
      {c:"0224", n:"Sistemas operativos en red", u:[
        ["Instalación de sistemas operativos en red", []],
-       ["Gestión de usuarios y grupos", []],
+       ["Gestión de usuarios y grupos", ["acceso-dominio"]],
        ["Gestión de dominios", ["dominios"]],
-       ["Gestión de los recursos compartidos en red", []],
+       ["Gestión de los recursos compartidos en red", ["gestion-almacenamiento"]],
        ["Monitorización y uso del sistema operativo en red", []],
        ["Integración de sistemas libres y propietarios", []]
      ]},
      {c:"0226", n:"Seguridad informática", u:[
-       ["Medidas de seguridad pasiva", []],
+       ["Medidas de seguridad pasiva", ["copias-imagenes"]],
        ["Gestión de dispositivos de almacenamiento", ["alta-disp"]],
        ["Mecanismos de seguridad activa", ["seguridad"]],
        ["Aseguramiento de la privacidad", []],
@@ -134,38 +134,38 @@ const COURSES = [
    modules:[
      {c:"0370", n:"Planificación y administración de redes", u:[
        ["Caracterización de redes: modelos y direccionamiento", ["osi","ipv4","ipv6"]],
-       ["Integración de elementos en una red", []],
-       ["Configuración y administración de conmutadores", []],
-       ["Configuración básica de routers", []],
+       ["Integración de elementos en una red", ["integracion-red"]],
+       ["Configuración y administración de conmutadores", ["switching"]],
+       ["Configuración básica de routers", ["routers"]],
        ["Redes virtuales (VLAN)", ["vlan"]],
        ["Protocolos de enrutamiento dinámico", ["nat-enrutamiento"]],
-       ["Acceso a Internet desde una LAN", []]
+       ["Acceso a Internet desde una LAN", ["acceso-internet"]]
      ]},
      {c:"0371", n:"Fundamentos de hardware", u:[
        ["Configuración de equipos y periféricos", ["hardware","numeracion"]],
        ["Software de utilidad y propósito general", ["diagnostico"]],
-       ["Imágenes y respaldo del software base", []],
+       ["Imágenes y respaldo del software base", ["copias-imagenes"]],
        ["Hardware en centros de proceso de datos (CPD)", ["virtualizacion"]],
-       ["Prevención de riesgos laborales y protección ambiental", []]
+       ["Prevención de riesgos laborales y protección ambiental", ["prl"]]
      ]},
      {c:"0369", n:"Implantación de sistemas operativos", u:[
        ["Instalación de software libre y propietario", ["so","instalacion-so"]],
        ["Administración de software de base", ["linux-comandos"]],
-       ["Administración y aseguramiento de la información", []],
+       ["Administración y aseguramiento de la información", ["gestion-almacenamiento"]],
        ["Administración de dominios", ["dominios"]],
-       ["Administración del acceso al dominio", []],
+       ["Administración del acceso al dominio", ["acceso-dominio"]],
        ["Supervisión del rendimiento del sistema", ["procesos-memoria"]],
-       ["Directivas de seguridad y auditorías", []],
-       ["Resolución de incidencias y asistencia técnica", []]
+       ["Directivas de seguridad y auditorías", ["directivas-auditoria"]],
+       ["Resolución de incidencias y asistencia técnica", ["soporte-incidencias"]]
      ]},
      {c:"0372", n:"Gestión de bases de datos", u:[
-       ["Sistemas de almacenamiento de la información", []],
+       ["Sistemas de almacenamiento de la información", ["almacenamiento-info"]],
        ["Diseño lógico: modelo E-R y normalización", ["modelo-er"]],
        ["Diseño físico de bases de datos", ["bd-sql"]],
        ["Realización de consultas", ["sql-avanzado"]],
-       ["Edición de los datos", []],
-       ["Construcción de guiones", []],
-       ["Gestión de la seguridad de los datos", []]
+       ["Edición de los datos", ["edicion-datos"]],
+       ["Construcción de guiones", ["guiones-sql"]],
+       ["Gestión de la seguridad de los datos", ["seguridad-datos"]]
      ]},
      LM
    ]},
@@ -173,7 +173,7 @@ const COURSES = [
    desc:"Administrar la infraestructura de una organización: servicios, servidores web, bases de datos, automatización y seguridad.",
    modules:[
      {c:"0374", n:"Administración de sistemas operativos", u:[
-       ["Servicio de directorio", []],
+       ["Servicio de directorio", ["dominios"]],
        ["Administración de procesos del sistema", ["procesos-memoria"]],
        ["Información del sistema", []],
        ["Acceso y administración remota", []],
@@ -183,7 +183,7 @@ const COURSES = [
      ]},
      {c:"0375", n:"Servicios de red e Internet", u:[
        ["Servicio de nombres de dominio (DNS)", ["servicios"]],
-       ["Configuración automática de red (DHCP)", []],
+       ["Configuración automática de red (DHCP)", ["servicios"]],
        ["Servidores web", ["servidor-web"]],
        ["Transferencia de archivos", []],
        ["Correo electrónico", []],
@@ -202,15 +202,15 @@ const COURSES = [
      ]},
      {c:"0377", n:"Administración de sistemas gestores de bases de datos", u:[
        ["Instalación y configuración de un SGBD", ["admin-sgbd"]],
-       ["Acceso a la información: usuarios y privilegios", []],
-       ["Guiones de administración", []],
+       ["Acceso a la información: usuarios y privilegios", ["seguridad-datos"]],
+       ["Guiones de administración", ["guiones-sql"]],
        ["Monitorización y optimización del rendimiento", []],
        ["Bases de datos distribuidas y replicadas", []]
      ]},
      {c:"0378", n:"Seguridad y alta disponibilidad", u:[
        ["Pautas de seguridad informática", ["seguridad"]],
-       ["Mecanismos de seguridad activa", []],
-       ["Acceso remoto y seguridad perimetral", []],
+       ["Mecanismos de seguridad activa", ["directivas-auditoria"]],
+       ["Acceso remoto y seguridad perimetral", ["acceso-internet"]],
        ["Cortafuegos", []],
        ["Servidores proxy", []],
        ["Soluciones de alta disponibilidad", ["alta-disp"]],
