@@ -225,41 +225,41 @@ const COURSES = [
      {c:"0486", n:"Acceso a datos", u:[
        ["Manejo de ficheros", ["acceso-datos"]],
        ["Conectores (JDBC)", ["jdbc"]],
-       ["Mapeo objeto-relacional (ORM)", []],
-       ["Bases de datos objeto-relacionales y orientadas a objetos", []],
+       ["Mapeo objeto-relacional (ORM)", ["orm"]],
+       ["Bases de datos objeto-relacionales y orientadas a objetos", ["bd-objetos"]],
        ["Bases de datos XML", ["xquery"]],
-       ["Componentes de acceso a datos", []]
+       ["Componentes de acceso a datos", ["componentes-datos"]]
      ]},
      {c:"0488", n:"Desarrollo de interfaces", u:[
        ["Confección de interfaces de usuario", ["interfaces"]],
        ["Interfaces a partir de documentos XML", ["interfaces"]],
-       ["Componentes visuales", []],
-       ["Usabilidad", []],
-       ["Confección de informes", []],
+       ["Componentes visuales", ["componentes-visuales"]],
+       ["Usabilidad", ["usabilidad"]],
+       ["Confección de informes", ["informes"]],
        ["Documentación de aplicaciones", ["refactorizacion"]],
-       ["Distribución de aplicaciones", []],
+       ["Distribución de aplicaciones", ["distribucion-apps"]],
        ["Realización de pruebas", ["pruebas"]]
      ]},
      {c:"0489", n:"Programación multimedia y dispositivos móviles", u:[
        ["Tecnologías para dispositivos móviles", ["android"]],
-       ["Programación de aplicaciones móviles", []],
-       ["Librerías multimedia", []],
-       ["Motores de juegos", []],
-       ["Desarrollo de juegos 2D y 3D", []]
+       ["Programación de aplicaciones móviles", ["android-avanzado"]],
+       ["Librerías multimedia", ["multimedia-movil"]],
+       ["Motores de juegos", ["videojuegos"]],
+       ["Desarrollo de juegos 2D y 3D", ["videojuegos"]]
      ]},
      {c:"0490", n:"Programación de servicios y procesos", u:[
-       ["Programación multiproceso", []],
+       ["Programación multiproceso", ["multiproceso"]],
        ["Programación multihilo", ["hilos"]],
-       ["Comunicaciones en red: sockets", []],
-       ["Servicios en red", []],
-       ["Programación segura", []]
+       ["Comunicaciones en red: sockets", ["sockets"]],
+       ["Servicios en red", ["api-rest"]],
+       ["Programación segura", ["programacion-segura"]]
      ]},
      {c:"0491", n:"Sistemas de gestión empresarial", u:[
        ["Sistemas ERP-CRM", ["erp"]],
-       ["Instalación y configuración de un ERP-CRM", []],
-       ["Organización y consulta de la información", []],
+       ["Instalación y configuración de un ERP-CRM", ["odoo-uso"]],
+       ["Organización y consulta de la información", ["odoo-uso"]],
        ["Implantación en una empresa", ["erp"]],
-       ["Desarrollo de componentes", []]
+       ["Desarrollo de componentes", ["odoo-modulos"]]
      ]}
    ]},
   {id:"daw1", short:"1º DAW", family:"DAW", name:"Desarrollo de Aplicaciones Web", grade:"Grado superior", year:"Primer curso",
@@ -279,11 +279,11 @@ const COURSES = [
      {c:"0613", n:"Desarrollo web en entorno servidor", u:[
        ["Arquitecturas y herramientas de programación", []],
        ["Inserción de código en páginas web", ["php-servidor"]],
-       ["Lenguajes de marcas con código embebido", []],
+       ["Lenguajes de marcas con código embebido", ["php-servidor"]],
        ["Aplicaciones web con código embebido", []],
        ["Generación dinámica de páginas web", []],
        ["Acceso a datos", ["php-bd"]],
-       ["Servicios web", []],
+       ["Servicios web", ["api-rest"]],
        ["Páginas web interactivas", []],
        ["Aplicaciones web híbridas", []]
      ]},
@@ -301,7 +301,7 @@ const COURSES = [
        ["Contenido multimedia", []],
        ["Contenido interactivo", []],
        ["Diseño de webs accesibles", []],
-       ["Usabilidad y diseño amigable", []]
+       ["Usabilidad y diseño amigable", ["usabilidad"]]
      ]}
    ]}
 ];
