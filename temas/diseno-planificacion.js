@@ -29,7 +29,7 @@ check:{q:"¿Qué es un wireframe?", o:["La web terminada","Un esquema de la estr
 <li><b>Iconografía e imágenes</b>, y el tono de los textos.</li>
 </ul>
 <p>En el código se traduce a <b>variables CSS</b>: <code>--color-principal: #1864AB; --espacio-2: 16px;</code></p>
-<div class="caso"><b>Lo ves en esta web</b>Cicloteca tiene un color por curso, una escala de espacios y los mismos componentes (tarjetas, botones, tests) en todas las páginas. Es una pequeña guía de estilo aplicada.</div>`}
+<div class="caso"><b>Lo ves en esta web</b>ITeca tiene un color por curso, una escala de espacios y los mismos componentes (tarjetas, botones, tests) en todas las páginas. Es una pequeña guía de estilo aplicada.</div>`}
 ],
 quiz:[
 {q:"¿Qué son las «personas» en diseño?", o:["Los empleados","Perfiles ficticios que representan a los usuarios típicos","Los clientes reales","Los diseñadores"], a:1, e:"Ayudan a diseñar pensando en necesidades concretas."},

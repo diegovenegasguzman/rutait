@@ -39,7 +39,7 @@ check:{q:"¿Qué propiedades conviene animar para que la animación sea fluida?"
   <span class="k">const</span> abierto = menu.classList.toggle(<span class="s">"abierto"</span>);
   btnMenu.setAttribute(<span class="s">"aria-expanded"</span>, abierto);
 });</code></pre>
-<div class="caso"><b>Lo ves en esta web</b>Las partículas al acertar una pregunta en Cicloteca son una animación con propósito: confirman que has acertado. Y se desactivan si tienes activada la opción de reducir movimiento.</div>`}
+<div class="caso"><b>Lo ves en esta web</b>Las partículas al acertar una pregunta en ITeca son una animación con propósito: confirman que has acertado. Y se desactivan si tienes activada la opción de reducir movimiento.</div>`}
 ],
 quiz:[
 {q:"¿Qué pseudoclase muestra el foco solo cuando se navega con teclado?", o:[":hover",":focus-visible",":active",":checked"], a:1, e:"Es la forma correcta de mantener el foco visible sin molestar al usar el ratón."},

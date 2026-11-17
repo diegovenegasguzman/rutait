@@ -35,7 +35,7 @@ localStorage.setItem(<span class="s">"carrito"</span>, JSON.stringify(carrito));
 <li>Solo guardan texto: los objetos se convierten con JSON.</li>
 <li>Nunca guardes datos sensibles en ellos: cualquier script de la página puede leerlos.</li>
 </ul>
-<div class="caso"><b>Lo usa esta misma web</b>Tu progreso en los tests de Cicloteca se guarda en localStorage. Por eso, si cambias de navegador, no aparece.</div>`}
+<div class="caso"><b>Lo usa esta misma web</b>Tu progreso en los tests de ITeca se guarda en localStorage. Por eso, si cambias de navegador, no aparece.</div>`}
 ],
 quiz:[
 {q:"¿Qué método elimina los espacios al principio y al final de un texto?", o:["trim()","split()","slice()","pad()"], a:0, e:"Muy útil al leer formularios."},
