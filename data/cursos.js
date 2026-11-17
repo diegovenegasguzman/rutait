@@ -16,14 +16,14 @@ const LM = {c:"0373", n:"Lenguajes de marcas y sistemas de gestión de informaci
 const COMUN_DAM_DAW = [
   {c:"0485", n:"Programación", u:[
     ["Elementos de un programa: variables, tipos y operadores", ["programacion"]],
-    ["Utilización de objetos", []],
-    ["Estructuras de control", []],
+    ["Utilización de objetos", ["objetos-java"]],
+    ["Estructuras de control", ["control-flujo"]],
     ["Desarrollo de clases", ["poo"]],
-    ["Lectura y escritura de información", []],
-    ["Estructuras de almacenamiento: arrays y colecciones", []],
-    ["Utilización avanzada de clases: herencia e interfaces", []],
-    ["Persistencia de los objetos", []],
-    ["Gestión de bases de datos relacionales desde el programa", []]
+    ["Lectura y escritura de información", ["entrada-salida"]],
+    ["Estructuras de almacenamiento: arrays y colecciones", ["colecciones"]],
+    ["Utilización avanzada de clases: herencia e interfaces", ["herencia-interfaces"]],
+    ["Persistencia de los objetos", ["persistencia"]],
+    ["Gestión de bases de datos relacionales desde el programa", ["jdbc"]]
   ]},
   {c:"0484", n:"Bases de datos", u:[
     ["Almacenamiento de la información", ["almacenamiento-info"]],
@@ -35,19 +35,19 @@ const COMUN_DAM_DAW = [
   {c:"0483", n:"Sistemas informáticos", u:[
     ["Explotación de sistemas microinformáticos", ["hardware"]],
     ["Instalación de sistemas operativos", ["so","instalacion-so"]],
-    ["Gestión de la información", []],
+    ["Gestión de la información", ["gestion-almacenamiento"]],
     ["Configuración de sistemas operativos", ["linux-comandos"]],
-    ["Conexión de sistemas en red", []],
-    ["Gestión de recursos en una red", []],
-    ["Aplicaciones informáticas de propósito general", []]
+    ["Conexión de sistemas en red", ["integracion-red"]],
+    ["Gestión de recursos en una red", ["dominios"]],
+    ["Aplicaciones informáticas de propósito general", ["instalar-software"]]
   ]},
   {c:"0487", n:"Entornos de desarrollo", u:[
-    ["Desarrollo de software", []],
+    ["Desarrollo de software", ["ciclo-software"]],
     ["Instalación y uso de entornos de desarrollo", ["entornos"]],
-    ["Diseño y realización de pruebas", []],
-    ["Optimización y documentación", []],
-    ["Diagramas de clases", []],
-    ["Diagramas de comportamiento", []]
+    ["Diseño y realización de pruebas", ["pruebas"]],
+    ["Optimización y documentación", ["refactorizacion"]],
+    ["Diagramas de clases", ["uml-clases"]],
+    ["Diagramas de comportamiento", ["uml-comportamiento"]]
   ]},
   LM
 ];
@@ -58,13 +58,13 @@ const COURSES = [
    modules:[
      {c:"0221", n:"Montaje y mantenimiento de equipos", u:[
        ["Selección de componentes", ["hardware","numeracion"]],
-       ["Análisis del mercado de componentes", []],
-       ["Ensamblado de equipos", []],
-       ["Medición de parámetros eléctricos", []],
+       ["Análisis del mercado de componentes", ["montaje"]],
+       ["Ensamblado de equipos", ["montaje"]],
+       ["Medición de parámetros eléctricos", ["electricidad"]],
        ["Mantenimiento de equipos", ["diagnostico","copias-imagenes"]],
-       ["Instalación de software", []],
-       ["Nuevas tendencias en equipos informáticos", []],
-       ["Mantenimiento de periféricos", []],
+       ["Instalación de software", ["instalar-software"]],
+       ["Nuevas tendencias en equipos informáticos", ["tendencias"]],
+       ["Mantenimiento de periféricos", ["perifericos"]],
        ["Prevención de riesgos laborales y protección ambiental", ["prl"]]
      ]},
      {c:"0222", n:"Sistemas operativos monopuesto", u:[
@@ -83,13 +83,13 @@ const COURSES = [
        ["Prevención de riesgos laborales y protección ambiental", ["prl"]]
      ]},
      {c:"0223", n:"Aplicaciones ofimáticas", u:[
-       ["Instalación de aplicaciones", []],
+       ["Instalación de aplicaciones", ["instalar-software"]],
        ["Procesadores de texto y hojas de cálculo", ["ofimatica"]],
-       ["Bases de datos ofimáticas", []],
-       ["Manipulación de imágenes", []],
-       ["Manipulación de vídeos", []],
-       ["Elaboración de presentaciones", []],
-       ["Gestión de correo y agenda electrónica", []],
+       ["Bases de datos ofimáticas", ["bd-ofimaticas"]],
+       ["Manipulación de imágenes", ["multimedia"]],
+       ["Manipulación de vídeos", ["multimedia"]],
+       ["Elaboración de presentaciones", ["presentaciones"]],
+       ["Gestión de correo y agenda electrónica", ["correo-agenda"]],
        ["Técnicas de soporte al usuario", ["soporte-incidencias"]]
      ]}
    ]},
@@ -224,21 +224,21 @@ const COURSES = [
    modules:[
      {c:"0486", n:"Acceso a datos", u:[
        ["Manejo de ficheros", ["acceso-datos"]],
-       ["Conectores (JDBC)", []],
+       ["Conectores (JDBC)", ["jdbc"]],
        ["Mapeo objeto-relacional (ORM)", []],
        ["Bases de datos objeto-relacionales y orientadas a objetos", []],
-       ["Bases de datos XML", []],
+       ["Bases de datos XML", ["xquery"]],
        ["Componentes de acceso a datos", []]
      ]},
      {c:"0488", n:"Desarrollo de interfaces", u:[
        ["Confección de interfaces de usuario", ["interfaces"]],
-       ["Interfaces a partir de documentos XML", []],
+       ["Interfaces a partir de documentos XML", ["interfaces"]],
        ["Componentes visuales", []],
        ["Usabilidad", []],
        ["Confección de informes", []],
-       ["Documentación de aplicaciones", []],
+       ["Documentación de aplicaciones", ["refactorizacion"]],
        ["Distribución de aplicaciones", []],
-       ["Realización de pruebas", []]
+       ["Realización de pruebas", ["pruebas"]]
      ]},
      {c:"0489", n:"Programación multimedia y dispositivos móviles", u:[
        ["Tecnologías para dispositivos móviles", ["android"]],
@@ -258,7 +258,7 @@ const COURSES = [
        ["Sistemas ERP-CRM", ["erp"]],
        ["Instalación y configuración de un ERP-CRM", []],
        ["Organización y consulta de la información", []],
-       ["Implantación en una empresa", []],
+       ["Implantación en una empresa", ["erp"]],
        ["Desarrollo de componentes", []]
      ]}
    ]},
