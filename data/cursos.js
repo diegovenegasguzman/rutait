@@ -97,36 +97,36 @@ const COURSES = [
    desc:"Servidores y dominios, servicios de red, seguridad y aplicaciones web para pequeñas empresas.",
    modules:[
      {c:"0224", n:"Sistemas operativos en red", u:[
-       ["Instalación de sistemas operativos en red", []],
+       ["Instalación de sistemas operativos en red", ["so-servidor"]],
        ["Gestión de usuarios y grupos", ["acceso-dominio"]],
        ["Gestión de dominios", ["dominios"]],
        ["Gestión de los recursos compartidos en red", ["gestion-almacenamiento"]],
-       ["Monitorización y uso del sistema operativo en red", []],
-       ["Integración de sistemas libres y propietarios", []]
+       ["Monitorización y uso del sistema operativo en red", ["monitorizacion"]],
+       ["Integración de sistemas libres y propietarios", ["samba-integracion"]]
      ]},
      {c:"0226", n:"Seguridad informática", u:[
        ["Medidas de seguridad pasiva", ["copias-imagenes"]],
        ["Gestión de dispositivos de almacenamiento", ["alta-disp"]],
        ["Mecanismos de seguridad activa", ["seguridad"]],
-       ["Aseguramiento de la privacidad", []],
-       ["Legislación y normas sobre seguridad", []]
+       ["Aseguramiento de la privacidad", ["privacidad-cifrado"]],
+       ["Legislación y normas sobre seguridad", ["legislacion"]]
      ]},
      {c:"0227", n:"Servicios en red", u:[
        ["Configuración dinámica de sistemas (DHCP)", ["servicios"]],
-       ["Resolución de nombres (DNS)", []],
-       ["Transferencia de ficheros", []],
-       ["Correo electrónico", []],
+       ["Resolución de nombres (DNS)", ["servicios"]],
+       ["Transferencia de ficheros", ["ftp-ssh"]],
+       ["Correo electrónico", ["servidor-correo"]],
        ["Servidores web", ["servidor-web"]],
-       ["Acceso remoto", []],
-       ["Despliegue de redes inalámbricas", []],
+       ["Acceso remoto", ["ftp-ssh"]],
+       ["Despliegue de redes inalámbricas", ["wifi-empresa"]],
        ["Interconexión de redes privadas con redes públicas", ["nat-enrutamiento"]]
      ]},
      {c:"0228", n:"Aplicaciones web", u:[
        ["Gestores de contenidos", ["cms"]],
-       ["Plataformas de aprendizaje a distancia", []],
-       ["Servicios de gestión de archivos web", []],
-       ["Aplicaciones de ofimática web", []],
-       ["Aplicaciones web de escritorio", []]
+       ["Plataformas de aprendizaje a distancia", ["lms-moodle"]],
+       ["Servicios de gestión de archivos web", ["nube-archivos"]],
+       ["Aplicaciones de ofimática web", ["ofimatica-web"]],
+       ["Aplicaciones web de escritorio", ["ofimatica-web"]]
      ]}
    ]},
   {id:"asir1", short:"1º ASIR", family:"ASIR", name:"Administración de Sistemas Informáticos en Red", grade:"Grado superior", year:"Primer curso",
@@ -175,46 +175,46 @@ const COURSES = [
      {c:"0374", n:"Administración de sistemas operativos", u:[
        ["Servicio de directorio", ["dominios"]],
        ["Administración de procesos del sistema", ["procesos-memoria"]],
-       ["Información del sistema", []],
-       ["Acceso y administración remota", []],
-       ["Servidores de impresión", []],
-       ["Integración de sistemas libres y propietarios", []],
+       ["Información del sistema", ["monitorizacion"]],
+       ["Acceso y administración remota", ["ftp-ssh"]],
+       ["Servidores de impresión", ["impresion"]],
+       ["Integración de sistemas libres y propietarios", ["samba-integracion"]],
        ["Lenguajes de scripting", ["scripting"]]
      ]},
      {c:"0375", n:"Servicios de red e Internet", u:[
        ["Servicio de nombres de dominio (DNS)", ["servicios"]],
        ["Configuración automática de red (DHCP)", ["servicios"]],
        ["Servidores web", ["servidor-web"]],
-       ["Transferencia de archivos", []],
-       ["Correo electrónico", []],
-       ["Mensajería instantánea, noticias y listas de distribución", []],
-       ["Servicio de audio", []],
-       ["Servicio de vídeo", []]
+       ["Transferencia de archivos", ["ftp-ssh"]],
+       ["Correo electrónico", ["servidor-correo"]],
+       ["Mensajería instantánea, noticias y listas de distribución", ["mensajeria"]],
+       ["Servicio de audio", ["streaming"]],
+       ["Servicio de vídeo", ["streaming"]]
      ]},
      {c:"0376", n:"Implantación de aplicaciones web", u:[
-       ["Servidores de aplicaciones web", []],
+       ["Servidores de aplicaciones web", ["servidores-aplicaciones"]],
        ["Instalación de gestores de contenidos", ["cms"]],
-       ["Administración de gestores de contenidos", []],
-       ["Ofimática web", []],
+       ["Administración de gestores de contenidos", ["admin-cms"]],
+       ["Ofimática web", ["ofimatica-web"]],
        ["Lenguajes de script de servidor", ["php-servidor"]],
-       ["Acceso a bases de datos desde el servidor", []],
-       ["Adaptación de gestores de contenidos", []]
+       ["Acceso a bases de datos desde el servidor", ["php-bd"]],
+       ["Adaptación de gestores de contenidos", ["admin-cms"]]
      ]},
      {c:"0377", n:"Administración de sistemas gestores de bases de datos", u:[
        ["Instalación y configuración de un SGBD", ["admin-sgbd"]],
        ["Acceso a la información: usuarios y privilegios", ["seguridad-datos"]],
        ["Guiones de administración", ["guiones-sql"]],
-       ["Monitorización y optimización del rendimiento", []],
-       ["Bases de datos distribuidas y replicadas", []]
+       ["Monitorización y optimización del rendimiento", ["optimizacion-bd"]],
+       ["Bases de datos distribuidas y replicadas", ["replicacion-bd"]]
      ]},
      {c:"0378", n:"Seguridad y alta disponibilidad", u:[
        ["Pautas de seguridad informática", ["seguridad"]],
        ["Mecanismos de seguridad activa", ["directivas-auditoria"]],
        ["Acceso remoto y seguridad perimetral", ["acceso-internet"]],
-       ["Cortafuegos", []],
-       ["Servidores proxy", []],
+       ["Cortafuegos", ["cortafuegos"]],
+       ["Servidores proxy", ["proxy"]],
        ["Soluciones de alta disponibilidad", ["alta-disp"]],
-       ["Legislación y normas sobre seguridad", []]
+       ["Legislación y normas sobre seguridad", ["legislacion"]]
      ]}
    ]},
   {id:"dam1", short:"1º DAM", family:"DAM", name:"Desarrollo de Aplicaciones Multiplataforma", grade:"Grado superior", year:"Primer curso",
@@ -282,16 +282,16 @@ const COURSES = [
        ["Lenguajes de marcas con código embebido", []],
        ["Aplicaciones web con código embebido", []],
        ["Generación dinámica de páginas web", []],
-       ["Acceso a datos", []],
+       ["Acceso a datos", ["php-bd"]],
        ["Servicios web", []],
        ["Páginas web interactivas", []],
        ["Aplicaciones web híbridas", []]
      ]},
      {c:"0614", n:"Despliegue de aplicaciones web", u:[
-       ["Arquitecturas web", []],
+       ["Arquitecturas web", ["servidores-aplicaciones"]],
        ["Administración de servidores web", ["servidor-web"]],
-       ["Servidores de aplicaciones", []],
-       ["Servidores de transferencia de archivos", []],
+       ["Servidores de aplicaciones", ["servidores-aplicaciones"]],
+       ["Servidores de transferencia de archivos", ["ftp-ssh"]],
        ["Servicios de red para el despliegue", ["servicios"]],
        ["Documentación y control de versiones", ["entornos"]]
      ]},

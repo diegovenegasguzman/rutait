@@ -1,4 +1,4 @@
-# RutaIT
+# Cicloteca
 
 Apuntes y tests gratuitos para los ciclos de informática de FP: SMR, ASIR, DAM y DAW.
 

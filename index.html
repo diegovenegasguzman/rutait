@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RutaIT — Apuntes y tests para SMR, ASIR, DAM y DAW</title>
+<title>Cicloteca — Apuntes y tests para SMR, ASIR, DAM y DAW</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -91,6 +91,15 @@ button{font:inherit;cursor:pointer;color:inherit}
 .stn::before{content:"";position:absolute;left:-49px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--white);border:5px solid var(--c)}
 .stn.full::before{background:var(--c)}
 .stn h3{font-family:var(--display);font-size:22px;letter-spacing:-.015em;line-height:1.25}
+.sech{font-family:var(--display);font-size:22px;letter-spacing:-.01em;margin:8px 0 14px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.mcard{background:var(--white);border:1px solid var(--rule);border-radius:20px;padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;transition:transform .15s,border-color .15s}
+.mcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+.mcard:hover{border-color:var(--c);transform:translateY(-2px)}
+.mcard b{font-family:var(--display);font-size:20px;line-height:1.2;letter-spacing:-.01em}
+.mmeta{font-size:14px;color:var(--ink3)}
+.mbar{height:6px;border-radius:99px;background:var(--paper);overflow:hidden;margin-top:6px}
+.mbar i{display:block;height:100%;background:var(--c)}
 .mcode{font-size:13px;font-weight:700;color:var(--ink3)}
 .mprog{font-size:14px;color:var(--ink3);margin:2px 0 10px}
 .units{list-style:none;display:grid;gap:8px;margin-top:4px}
@@ -297,9 +306,9 @@ footer p{max-width:62ch}
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#inicio" aria-label="RutaIT, inicio">
+    <a class="brand" href="#inicio" aria-label="Cicloteca, inicio">
       <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 22 H13 C17 22 17 8 21 8 H26" fill="none" stroke="#1C7ED6" stroke-width="4.5" stroke-linecap="round"/><path d="M4 8 H9" fill="none" stroke="#E8590C" stroke-width="4.5" stroke-linecap="round"/><circle cx="4" cy="22" r="3.6" fill="#fff" stroke="#18202E" stroke-width="2.4"/><circle cx="26" cy="8" r="3.6" fill="#fff" stroke="#18202E" stroke-width="2.4"/></svg>
-      RutaIT<em>prototipo</em>
+      Cicloteca
     </a>
     <nav class="menu" aria-label="Principal">
       <a href="#inicio" data-r="inicio">Cursos</a>
@@ -313,7 +322,7 @@ footer p{max-width:62ch}
 
 <footer>
   <div class="wrap">
-    <p>RutaIT es un proyecto independiente y gratuito. Los apuntes siguen los módulos de los ciclos oficiales de Formación Profesional, pero no sustituyen al material de tu centro. No está afiliado al Ministerio de Educación, a ningún centro educativo ni a Microsoft, Cisco u otras marcas citadas.</p>
+    <p>Cicloteca es un proyecto independiente y gratuito. Los apuntes siguen los módulos de los ciclos oficiales de Formación Profesional, pero no sustituyen al material de tu centro. No está afiliado al Ministerio de Educación, a ningún centro educativo ni a Microsoft, Cisco u otras marcas citadas.</p>
     <p>Aviso legal y privacidad (en preparación)</p>
   </div>
 </footer>
@@ -434,16 +443,21 @@ function temaStatus(id){
   return `<span class="status">Sin empezar</span>`;
 }
 
+function modStats(m){
+  const ready = m.u.filter(u => u[1].some(t => TEMAS[t])).length;
+  const ids = [...new Set(m.u.flatMap(u=>u[1]))].filter(t=>TEMAS[t]);
+  return {ready, units:m.u.length, temas:ids.length, done:ids.filter(t => (P.best[t]||0) >= PASS).length};
+}
 function viewCourse(c){
   const s = courseStats(c);
-  const tcard = t => `<a class="tcard" href="#tema-${t}"><b>${TEMAS[t].title}</b><span>${TEMAS[t].sections.length} apartados, ${TEMAS[t].mins} min, test de ${TEMAS[t].quiz.length} preguntas</span>${temaStatus(t)}</a>`;
-  const html = c.modules.map(m => {
-    const units = m.u.map((u,i) => {
-      const ts = u[1].filter(t => TEMAS[t]);
-      return `<li class="unit ${ts.length ? "has" : ""}"><div class="uh"><span class="un">${i+1}</span><span class="ut">${u[0]}</span>${ts.length ? "" : `<span class="up">En preparación</span>`}</div>${ts.length ? `<div class="temas">${ts.map(tcard).join("")}</div>` : ""}</li>`;
-    }).join("");
-    const done = m.u.filter(u => u[1].some(t => TEMAS[t])).length;
-    return `<div class="stn ${done?"full":""}"><div class="mcode">Módulo ${m.c}</div><h3>${m.n}</h3><p class="mprog">${done} de ${m.u.length} unidades con apuntes</p><ol class="units">${units}</ol></div>`;
+  const cards = c.modules.map(m => {
+    const ms = modStats(m);
+    return `<a class="mcard" href="#modulo-${c.id}-${m.c}">
+      <span class="mcode">Módulo ${m.c}</span>
+      <b>${m.n}</b>
+      <span class="mmeta">${ms.units} unidades, ${ms.temas} temas${ms.done ? `, ${ms.done} superados` : ""}</span>
+      <span class="mbar"><i style="width:${ms.temas ? ms.done/ms.temas*100 : 0}%"></i></span>
+    </a>`;
   }).join("");
   const other = COURSES.find(o => o.family===c.family && o.id!==c.id);
   return `<div class="wrap">
@@ -452,11 +466,29 @@ function viewCourse(c){
       <div class="grade">${c.year} de ${c.family}, ${c.grade.toLowerCase()}</div>
       <h1>${c.name}</h1>
       <p>${c.desc}</p>
-      <div class="cprog"><div class="track"><i style="width:${s.units? s.ready/s.units*100 : 0}%"></i></div>${s.ready} de ${s.units} unidades del temario con apuntes. ${s.done} de ${s.total} temas superados.</div>
+      <div class="cprog"><div class="track"><i style="width:${s.total? s.done/s.total*100 : 0}%"></i></div>${s.done} de ${s.total} temas superados</div>
     </section>
-    <div class="line">${html}</div>
-    ${other ? `<p style="margin:36px 0 0 56px"><a class="btn line2" href="#curso-${other.id}">Ir a ${other.short}</a></p>` : ""}
-    <p class="src">Temario basado en los contenidos básicos del real decreto de cada título. Tu centro o tu comunidad autónoma pueden ampliarlo u ordenarlo de otra forma.</p>
+    <h2 class="sech">Módulos</h2>
+    <div class="mgrid">${cards}</div>
+    ${other ? `<p style="margin:32px 0 0"><a class="btn line2" href="#curso-${other.id}">Ir a ${other.short}</a></p>` : ""}
+    <p class="src" style="margin-left:0">Temario basado en los contenidos básicos del real decreto de cada título. Tu centro o tu comunidad autónoma pueden ampliarlo u ordenarlo de otra forma.</p>
+  </div>`;
+}
+function viewModule(c, m){
+  const tcard = t => `<a class="tcard" href="#tema-${t}"><b>${TEMAS[t].title}</b><span>${TEMAS[t].sections.length} apartados, ${TEMAS[t].mins} min, test de ${TEMAS[t].quiz.length} preguntas</span>${temaStatus(t)}</a>`;
+  const units = m.u.map((u,i) => {
+    const ts = u[1].filter(t => TEMAS[t]);
+    return `<div class="stn ${ts.length?"full":""}"><div class="mcode">Unidad ${i+1}</div><h3>${u[0]}</h3>${ts.length ? `<div class="temas">${ts.map(tcard).join("")}</div>` : `<p class="empty">Apuntes en preparación.</p>`}</div>`;
+  }).join("");
+  const ms = modStats(m);
+  return `<div class="wrap">
+    <section class="chead">
+      <a class="back" href="#curso-${c.id}">← ${c.short}</a>
+      <div class="grade">Módulo ${m.c} de ${c.short}</div>
+      <h1>${m.n}</h1>
+      <div class="cprog"><div class="track"><i style="width:${ms.temas? ms.done/ms.temas*100 : 0}%"></i></div>${ms.units} unidades. ${ms.done} de ${ms.temas} temas superados.</div>
+    </section>
+    <div class="line">${units}</div>
   </div>`;
 }
 
@@ -465,7 +497,7 @@ function viewTema(id){
   const mod = currentCourse.modules.find(m=>m.t.includes(id));
   return `<div class="wrap"><div class="tgrid">
     <aside class="toc">
-      <a class="back" href="#curso-${currentCourse.id}">← ${currentCourse.short}</a>
+      <a class="back" href="${mod ? `#modulo-${currentCourse.id}-${mod.c}` : `#curso-${currentCourse.id}`}">← ${mod ? mod.n : currentCourse.short}</a>
       <ol>${t.sections.map((s,i)=>`<li><a href="#tema-${id}" data-sec="s${i}">${s.h}</a></li>`).join("")}</ol>
       <a class="btn main tbtn" href="#test-${id}">Hacer el test</a>
     </aside>
@@ -681,6 +713,7 @@ function render(keep){
   document.body.classList.remove("anim");
   let tab = "inicio";
   if((m = r.match(/^curso-(\w+)$/)) && course(m[1])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewCourse(currentCourse); }
+  else if((m = r.match(/^modulo-(\w+)-(\w+)$/)) && course(m[1]) && course(m[1]).modules.find(x=>x.c===m[2])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewModule(currentCourse, currentCourse.modules.find(x=>x.c===m[2])); }
   else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); bindChecks(m[1]); }
   else if((m = r.match(/^test-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTest(m[1]); bindTest(); animateResult(); }
   else if(r==="herramientas"){ tab="herramientas"; setColor(null); app.innerHTML = viewTools(); bindTools(); }
