@@ -137,6 +137,17 @@ article.doc{max-width:720px}
 .work{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;margin:4px 0 18px}
 .work .stepn{display:grid;grid-template-columns:28px 1fr;gap:10px;margin-bottom:10px}
 .work .stepn i{font-style:normal;width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.caso{border-radius:14px;padding:16px 18px 16px 52px;margin:4px 0 18px;background:var(--white);border:1px solid var(--rule);position:relative}
+.caso::before{content:"";position:absolute;left:18px;top:18px;width:20px;height:20px;border-radius:6px;background:var(--c);mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M3 4h14v9H8l-4 3v-3H3z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M3 4h14v9H8l-4 3v-3H3z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat}
+.caso b:first-child{display:block;font-family:var(--display);margin-bottom:2px}
+.check{margin:8px 0 6px;border:2px dashed color-mix(in srgb,var(--c) 45%,white);border-radius:18px;padding:18px 20px;background:color-mix(in srgb,var(--c) 4%,white)}
+.check .ct{font-weight:700;color:var(--c);font-size:14px}
+.check .cq{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.3;margin:4px 0 12px}
+.check .opts{gap:8px}
+.check .opt{padding:11px 14px;font-size:16px;background:var(--white)}
+.check .opt .k{width:28px;height:28px}
+.check .expl{margin-top:12px;padding:12px 16px;font-size:15.5px}
+.check .expl b{font-size:16px}
 .end{margin-top:44px;padding:28px;border-radius:22px;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .end h3{font-family:var(--display);font-size:24px;letter-spacing:-.02em}
 .end p{color:#B7C0D0;margin:4px 0 0;font-size:16px}
@@ -150,6 +161,21 @@ article.doc{max-width:720px}
 .btn.line2:hover{border-color:var(--ink)}
 .btn.light{background:var(--white);color:var(--ink)}
 
+function checkHTML(c,i){
+  return `<div class="check" data-i="${i}"><div class="ct">Pregunta rápida</div><div class="cq">${esc(c.q)}</div>
+    <div class="opts">${c.o.map((o,k)=>`<button class="opt" data-k="${k}"><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("")}</div></div>`;
+}
+function bindChecks(id){
+  document.querySelectorAll(".check").forEach(box=>{
+    const c = TEMAS[id].sections[+box.dataset.i].check;
+    box.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
+      const k = +b.dataset.k, ok = k===c.a, r = b.getBoundingClientRect();
+      box.querySelectorAll(".opt").forEach((x,j)=>{ x.disabled = true; x.classList.add(j===c.a ? "right" : j===k ? "wrong" : "fade"); });
+      box.insertAdjacentHTML("beforeend", `<div class="expl ${ok?"good":"bad"}"><b>${ok ? "¡Bien visto!" : "Casi. Es la " + "ABCD"[c.a]}</b>${esc(c.e)}</div>`);
+      if(ok) burst(r.left + 30, r.top + r.height/2, 30);
+    }));
+  });
+}
 /* ---------- Test ---------- */
 .qwrap{max-width:760px;margin:0 auto;padding:40px 0 20px}
 .qtop{display:flex;align-items:center;justify-content:space-between;gap:16px}
@@ -426,7 +452,7 @@ function viewTema(id){
       <h1>${t.title}</h1>
       <p class="intro">${t.intro}</p>
       <p class="meta">${t.mins} minutos de lectura. Test de ${t.quiz.length} preguntas al final; se supera con un ${PASS}%.</p>
-      ${t.sections.map((s,i)=>`<section id="s${i}"><h2>${s.h}</h2>${s.html}</section>`).join("")}
+      ${t.sections.map((s,i)=>`<section id="s${i}"><h2>${s.h}</h2>${s.html}${s.check ? checkHTML(s.check,i) : ""}</section>`).join("")}
       <div class="end">
         <div><h3>Comprueba lo que has aprendido</h3><p>${t.quiz.length} preguntas con explicación de cada respuesta.</p></div>
         <a class="btn light" href="#test-${id}">Empezar el test</a>
@@ -435,6 +461,21 @@ function viewTema(id){
   </div></div>`;
 }
 
+function checkHTML(c,i){
+  return `<div class="check" data-i="${i}"><div class="ct">Pregunta rápida</div><div class="cq">${esc(c.q)}</div>
+    <div class="opts">${c.o.map((o,k)=>`<button class="opt" data-k="${k}"><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("")}</div></div>`;
+}
+function bindChecks(id){
+  document.querySelectorAll(".check").forEach(box=>{
+    const c = TEMAS[id].sections[+box.dataset.i].check;
+    box.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
+      const k = +b.dataset.k, ok = k===c.a, r = b.getBoundingClientRect();
+      box.querySelectorAll(".opt").forEach((x,j)=>{ x.disabled = true; x.classList.add(j===c.a ? "right" : j===k ? "wrong" : "fade"); });
+      box.insertAdjacentHTML("beforeend", `<div class="expl ${ok?"good":"bad"}"><b>${ok ? "¡Bien visto!" : "Casi. Es la " + "ABCD"[c.a]}</b>${esc(c.e)}</div>`);
+      if(ok) burst(r.left + 30, r.top + r.height/2, 30);
+    }));
+  });
+}
 /* ---------- Test ---------- */
 let Q = null;
 function startQuiz(id){
@@ -618,7 +659,7 @@ function render(keep){
   document.body.classList.remove("anim");
   let tab = "inicio";
   if((m = r.match(/^curso-(\w+)$/)) && course(m[1])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewCourse(currentCourse); }
-  else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); }
+  else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); bindChecks(m[1]); }
   else if((m = r.match(/^test-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTest(m[1]); bindTest(); animateResult(); }
   else if(r==="herramientas"){ tab="herramientas"; setColor(null); app.innerHTML = viewTools(); bindTools(); }
   else { setColor(null); app.innerHTML = viewHome(); if(firstHome && !reduce){ document.body.classList.add("anim"); } firstHome = false; bindMap(); }
