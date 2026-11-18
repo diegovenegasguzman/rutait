@@ -347,3 +347,118 @@ PRACTICA("replicacion-bd", 0, {title:"Práctica: arrancar la réplica", os:"sql"
   {t:"En la réplica, arranca la replicación.", s:"START REPLICA;", alt:["START SLAVE;"], out:"Query OK, 0 rows affected (0,01 sec)"},
   {t:"Comprueba su estado en formato vertical.", s:"SHOW REPLICA STATUS\\G", alt:["SHOW SLAVE STATUS\\G","SHOW REPLICA STATUS;"], out:"*************************** 1. row ***************************\n             Source_Host: 10.0.0.10\n      Replica_IO_Running: Yes\n     Replica_SQL_Running: Yes\n   Seconds_Behind_Source: 0"}
 ]});
+
+/* ===================== Retos: el enunciado no dice qué comando usar ===================== */
+RETO("linux-comandos", {title:"Reto: organiza el proyecto de clase", os:"linux", host:"aula",
+  intro:"Te han pasado un proyecto desordenado en tu carpeta personal. Tienes que dejarlo organizado usando solo la terminal.", steps:[
+  {t:"Primero, mira qué hay en la carpeta actual, incluidos los archivos ocultos y con todos los detalles.", s:"ls -la", c:["ls -la","ls -al","ls -l -a","ls -a -l"], out:"-rw-r--r-- 1 alumno alumno  1820 nov 18 09:10 indice.html\n-rw-r--r-- 1 alumno alumno   512 nov 18 09:10 estilos.css\n-rw-r--r-- 1 alumno alumno 48211 nov 18 09:12 logo.png\n-rw-r--r-- 1 alumno alumno     0 nov 18 09:13 borrador.txt"},
+  {t:"Crea la carpeta <code>web/img</code> de una vez, con su carpeta intermedia.", s:"mkdir -p web/img", c:["mkdir -p web/img/?"], out:""},
+  {t:"Mete <code>logo.png</code> dentro de <code>web/img</code>.", s:"mv logo.png web/img/", c:["mv logo\\.png (\\./)?web/img(/|/logo\\.png)?"], out:""},
+  {t:"El archivo <code>indice.html</code> debería llamarse <code>index.html</code> y estar dentro de <code>web</code>. Hazlo con un solo comando.", s:"mv indice.html web/index.html", c:["mv indice\\.html (\\./)?web/index\\.html"], out:"", tip:"El mismo comando que mueve también renombra si le das el nombre nuevo en el destino."},
+  {t:"<code>borrador.txt</code> está vacío y no sirve. Elimínalo.", s:"rm borrador.txt", c:["rm (-f |-i )?borrador\\.txt"], out:""},
+  {t:"Que nadie salvo tú pueda leer <code>estilos.css</code>: permisos <b>rw-------</b>.", s:"chmod 600 estilos.css", c:["chmod (600|u=rw,go=|u=rw,g=,o=|go-r) estilos\\.css"], out:""}
+]});
+
+RETO("scripting", {title:"Reto: el script de copias no arranca", os:"linux", host:"servidor",
+  intro:"Un compañero dejó el script <code>backup.sh</code> en tu carpeta. Cuando intentas ejecutarlo, da «Permiso denegado». Arréglalo y comprueba que funciona.", steps:[
+  {t:"Mira con detalle los permisos de <code>backup.sh</code>.", s:"ls -l backup.sh", c:["ls -(l|la|al) backup\\.sh"], out:"-rw-r--r-- 1 alumno alumno 412 nov 18 09:40 backup.sh"},
+  {t:"Le falta el permiso de ejecución. Dáselo al propietario.", s:"chmod u+x backup.sh", c:["chmod (u\\+x|\\+x|744|755|700) backup\\.sh"], out:""},
+  {t:"Ejecútalo pasándole la carpeta <code>/srv/datos</code>.", s:"./backup.sh /srv/datos", c:["(sudo )?\\./backup\\.sh /srv/datos/?"], out:"Copia creada en /backup/copia-2026-11-18.tar.gz"},
+  {t:"Comprueba que el script ha terminado sin errores.", s:"echo $?", out:"0", tip:"Hay una variable especial con el código de salida del último comando."},
+  {t:"Programa que se ejecute cada noche: abre tus tareas programadas.", s:"crontab -e", out:"no crontab for alumno - using an empty one"}
+]});
+
+RETO("integracion-red", {title:"Reto: «No tengo Internet»", os:"cmd",
+  intro:"Llama una usuaria de administración: no le carga ninguna web. Estás conectado a su equipo con Windows. Encuentra el problema y resuélvelo.", steps:[
+  {t:"Empieza por ver qué configuración IP tiene el equipo.", s:"ipconfig", c:["ipconfig( /all)?"], out:"Adaptador de Ethernet Ethernet:\n   Dirección IPv4 de configuración automática: 169.254.83.12\n   Máscara de subred . . . . . . . . . . . . : 255.255.0.0\n   Puerta de enlace predeterminada . . . . . :"},
+  {t:"Tiene una IP 169.254.x.x: no ha recibido IP del DHCP. Suelta la configuración actual.", s:"ipconfig /release", out:"Configuración IP de Windows"},
+  {t:"Pide una IP nueva al DHCP.", s:"ipconfig /renew", out:"   Dirección IPv4. . . . . . . . . : 192.168.1.58\n   Puerta de enlace predeterminada : 192.168.1.1"},
+  {t:"Comprueba que ahora llega a Internet usando una IP, sin depender del DNS.", s:"ping 8.8.8.8", c:["ping (8\\.8\\.8\\.8|8\\.8\\.4\\.4|1\\.1\\.1\\.1)"], out:"Respuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117"},
+  {t:"Por último, comprueba que el DNS resuelve <code>google.com</code>.", s:"nslookup google.com", c:["nslookup (www\\.)?google\\.com","ping (www\\.)?google\\.com"], out:"Nombre:  google.com\nAddress:  142.250.184.14"}
+]});
+
+RETO("routers", {title:"Reto: monta el router R2 desde cero", os:"cisco",
+  intro:"Llega un router nuevo para la sede de Girona. Debe llamarse R2, su interfaz g0/0 debe tener la IP 10.20.0.1/24 y su ruta por defecto debe ir a 10.20.0.254. No te decimos los comandos.", steps:[
+  {t:"Entra al modo privilegiado.", s:"enable", c:[CI.en], p:"Router>", out:""},
+  {t:"Entra al modo de configuración global.", s:"configure terminal", c:[CI.conf], p:"Router#", out:""},
+  {t:"Ponle el nombre R2.", s:"hostname R2", p:"Router(config)#", out:""},
+  {t:"Entra en la interfaz g0/0.", s:"interface g0/0", c:[CI.int("0/0")], p:"R2(config)#", out:""},
+  {t:"Asígnale 10.20.0.1/24 (escribe la máscara en formato decimal).", s:"ip address 10.20.0.1 255.255.255.0", c:[CI.ip("10.20.0.1","255.255.255.0")], p:"R2(config-if)#", out:"", tip:"/24 equivale a 255.255.255.0."},
+  {t:"Que la interfaz funcione.", s:"no shutdown", c:[CI.noshut], p:"R2(config-if)#", out:"%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up"},
+  {t:"Sal de la interfaz a configuración global.", s:"exit", p:"R2(config-if)#", out:""},
+  {t:"Crea la ruta por defecto hacia 10.20.0.254.", s:"ip route 0.0.0.0 0.0.0.0 10.20.0.254", p:"R2(config)#", out:""},
+  {t:"Vuelve al modo privilegiado.", s:"end", p:"R2(config)#", out:""},
+  {t:"Que la configuración sobreviva a un reinicio.", s:"copy running-config startup-config", c:[CI.save], p:"R2#", out:"Building configuration...\n[OK]"}
+]});
+
+RETO("vlan", {title:"Reto: separa a los alumnos en su VLAN", os:"cisco", host:"SW2",
+  intro:"En el switch SW2 los PC de alumnos y los de profesores están mezclados. Crea la VLAN 20 llamada ALUMNOS, mete en ella el puerto fa0/7 y comprueba el resultado.", steps:[
+  {t:"Estás en modo privilegiado. Entra en configuración global.", s:"configure terminal", c:[CI.conf], p:"SW2#", out:""},
+  {t:"Crea la VLAN 20.", s:"vlan 20", p:"SW2(config)#", out:""},
+  {t:"Ponle el nombre ALUMNOS.", s:"name ALUMNOS", p:"SW2(config-vlan)#", out:""},
+  {t:"Ve al puerto fa0/7.", s:"interface fa0/7", c:[CI.fa("0/7")], p:"SW2(config-vlan)#", out:""},
+  {t:"Es un PC: el puerto debe ser de acceso.", s:"switchport mode access", c:["(switchport|sw) mode access"], p:"SW2(config-if)#", out:""},
+  {t:"Asigna el puerto a la VLAN de alumnos.", s:"switchport access vlan 20", c:["(switchport|sw) access vlan 20"], p:"SW2(config-if)#", out:""},
+  {t:"Vuelve al modo privilegiado.", s:"end", p:"SW2(config-if)#", out:""},
+  {t:"Comprueba que fa0/7 aparece en la VLAN 20.", s:"show vlan brief", c:["(sh|show) vlan (br|brief)"], p:"SW2#", out:"VLAN Name                 Status    Ports\n1    default              active    Fa0/1, Fa0/2, Fa0/3\n20   ALUMNOS              active    Fa0/7"}
+]});
+
+RETO("servidor-web", {title:"Reto: la web de la tienda no carga", os:"linux", host:"web01",
+  intro:"Esta mañana alguien editó la configuración de Apache y desde entonces la web de la tienda da error. Encuentra el fallo, corrígelo y vuelve a ponerla en marcha.", steps:[
+  {t:"Mira el estado del servicio <code>apache2</code>.", s:"systemctl status apache2", c:[sudo+"systemctl status apache2(\\.service)?"], out:"● apache2.service - The Apache HTTP Server\n     Active: failed (Result: exit-code) since Wed 2026-11-18 08:52:14 CET"},
+  {t:"Ha fallado al arrancar. Comprueba si la configuración tiene errores de sintaxis.", s:"sudo apachectl configtest", c:[sudo+"(apachectl|apache2ctl) (configtest|-t)"], out:"AH00526: Syntax error on line 4 of /etc/apache2/sites-available/tienda.conf:\nInvalid command 'DocumentRot', perhaps misspelled"},
+  {t:"Hay una errata en la línea 4. Abre ese archivo con nano para corregirla.", s:"sudo nano /etc/apache2/sites-available/tienda.conf", c:["sudo (nano|vi|vim) /etc/apache2/sites-available/tienda\\.conf"], out:"  GNU nano 7.2   /etc/apache2/sites-available/tienda.conf\n<VirtualHost *:80>\n    ServerName tienda.ejemplo.com\n    DocumentRoot /var/www/tienda      ← corregido y guardado"},
+  {t:"Vuelve a comprobar la sintaxis.", s:"sudo apachectl configtest", c:[sudo+"(apachectl|apache2ctl) (configtest|-t)"], out:"Syntax OK"},
+  {t:"Arranca de nuevo Apache.", s:"sudo systemctl restart apache2", c:["sudo systemctl (restart|start) apache2(\\.service)?"], out:""}
+]});
+
+RETO("ftp-ssh", {title:"Reto: sube la web al servidor sin contraseña", os:"linux", host:"portatil",
+  intro:"Tienes que publicar <code>index.html</code> en el servidor 10.0.0.8, en la carpeta <code>/var/www/html/</code>, con el usuario <code>deploy</code>. El servidor no acepta contraseñas: solo claves.", steps:[
+  {t:"Genera tu par de claves de tipo ed25519.", s:"ssh-keygen -t ed25519", c:["ssh-keygen( -t ed25519)?"], out:"Your public key has been saved in /home/alumno/.ssh/id_ed25519.pub"},
+  {t:"Instala tu clave pública en el servidor para el usuario <code>deploy</code>.", s:"ssh-copy-id deploy@10.0.0.8", out:"Number of key(s) added: 1"},
+  {t:"Copia <code>index.html</code> a la carpeta de la web del servidor.", s:"scp index.html deploy@10.0.0.8:/var/www/html/", c:["scp index\\.html deploy@10\\.0\\.0\\.8:/var/www/html(/|/index\\.html)?"], out:"index.html                100%   4812   1.2MB/s   00:00"},
+  {t:"Conéctate al servidor para comprobarlo.", s:"ssh deploy@10.0.0.8", out:"deploy@web:~$ (sesión abierta)"}
+]});
+
+RETO("cortafuegos", {title:"Reto: protege el servidor web", os:"linux", host:"web01",
+  intro:"El servidor web acaba de instalarse y no tiene cortafuegos. Solo debe aceptar tráfico web (HTTP y HTTPS) desde cualquier sitio y SSH desde la red de administración 10.0.0.0/24.", steps:[
+  {t:"Que por defecto se bloquee todo lo que entra.", s:"sudo ufw default deny incoming", out:"Default incoming policy changed to 'deny'"},
+  {t:"Abre HTTP (puerto 80, TCP).", s:"sudo ufw allow 80/tcp", c:["sudo ufw allow (80/tcp|http|80)"], out:"Rule added"},
+  {t:"Abre HTTPS (puerto 443, TCP).", s:"sudo ufw allow 443/tcp", c:["sudo ufw allow (443/tcp|https|443)"], out:"Rule added"},
+  {t:"Permite SSH solo desde 10.0.0.0/24.", s:"sudo ufw allow from 10.0.0.0/24 to any port 22 proto tcp", c:["sudo ufw allow from 10\\.0\\.0\\.0/24 to any port 22( proto tcp)?"], out:"Rule added"},
+  {t:"Activa el cortafuegos.", s:"sudo ufw enable", out:"Firewall is active and enabled on system startup"},
+  {t:"Comprueba las reglas.", s:"sudo ufw status", c:["sudo ufw status( numbered| verbose)?"], out:"To                         Action      From\n80/tcp                     ALLOW       Anywhere\n443/tcp                    ALLOW       Anywhere\n22/tcp                     ALLOW       10.0.0.0/24"}
+]});
+
+RETO("bd-sql", {title:"Reto: el inventario de la tienda", os:"sql",
+  intro:"Trabajas con la tabla <code>productos</code>, que tiene las columnas <code>id</code>, <code>nombre</code>, <code>precio</code> y <code>stock</code>. Escribe tú las consultas.", steps:[
+  {t:"Muestra el <code>nombre</code> y el <code>precio</code> de los productos que cuestan más de 100.", s:"SELECT nombre, precio FROM productos WHERE precio > 100;", out:"+------------------+--------+\n| nombre           | precio |\n+------------------+--------+\n| Monitor 27\"      | 219.00 |\n| Disco SSD 2 TB   | 129.90 |\n+------------------+--------+", tip:"SELECT columnas FROM tabla WHERE condición;"},
+  {t:"Han llegado 10 unidades del producto con <code>id</code> 3. Súmalas a su <code>stock</code>.", s:"UPDATE productos SET stock = stock + 10 WHERE id = 3;", out:"Query OK, 1 row affected (0,00 sec)"},
+  {t:"Muestra todos los productos ordenados del más caro al más barato.", s:"SELECT * FROM productos ORDER BY precio DESC;", out:"| 4 | Monitor 27\"    | 219.00 |  6 |\n| 2 | Disco SSD 2 TB | 129.90 | 11 |\n| 3 | Ratón óptico   |  12.50 | 25 |\n| 1 | Alfombrilla    |   6.90 | 40 |"},
+  {t:"¿Cuántos productos hay sin stock (stock igual a 0)? Usa <code>COUNT(*)</code>.", s:"SELECT COUNT(*) FROM productos WHERE stock = 0;", out:"+----------+\n| COUNT(*) |\n+----------+\n|        0 |\n+----------+"},
+  {t:"Da de alta el producto <code>Teclado</code> con precio 24.90 y stock 15 (columnas <code>nombre</code>, <code>precio</code>, <code>stock</code>).", s:"INSERT INTO productos (nombre, precio, stock) VALUES ('Teclado', 24.90, 15);", alt:["INSERT INTO productos (nombre, precio, stock) VALUES ('Teclado', 24.9, 15);"], out:"Query OK, 1 row affected (0,01 sec)"}
+]});
+
+RETO("jdbc", {title:"Reto: prueba las consultas antes de llevarlas a Java", os:"sql",
+  intro:"Antes de escribir el DAO de clientes, compruebas en el cliente MySQL que las consultas funcionan. La tabla <code>clientes</code> tiene <code>id</code>, <code>nombre</code>, <code>email</code> y <code>ciudad</code>.", steps:[
+  {t:"Busca el cliente con <code>id</code> 7 (todas las columnas).", s:"SELECT * FROM clientes WHERE id = 7;", out:"| 7 | Núria Puig | nuria@correo.es | Girona |"},
+  {t:"Lista el <code>nombre</code> de los clientes de <code>Girona</code>, ordenados por nombre.", s:"SELECT nombre FROM clientes WHERE ciudad = 'Girona' ORDER BY nombre;", out:"| Jordi Vila |\n| Núria Puig |"},
+  {t:"Cambia el email del cliente 7 a <code>nuria@nuevo.es</code>.", s:"UPDATE clientes SET email = 'nuria@nuevo.es' WHERE id = 7;", out:"Query OK, 1 row affected (0,00 sec)"},
+  {t:"Borra el cliente con <code>id</code> 12.", s:"DELETE FROM clientes WHERE id = 12;", out:"Query OK, 1 row affected (0,00 sec)"}
+]});
+
+RETO("entornos", {title:"Reto: una funcionalidad nueva en su rama", os:"git",
+  intro:"Tienes que añadir el pie de página a la web sin tocar la rama principal hasta que esté terminado. El repositorio ya existe y estás en <code>main</code>.", steps:[
+  {t:"Crea una rama llamada <code>footer</code>.", s:"git branch footer", out:""},
+  {t:"Ponte a trabajar en ella.", s:"git switch footer", c:["git (switch|checkout) footer"], out:"Cambiado a rama 'footer'"},
+  {t:"Ya has editado los archivos. Prepara todos los cambios.", s:"git add .", c:["git add (\\.|-A|--all)"], out:""},
+  {t:"Guárdalos en el historial con un mensaje que explique el cambio.", s:"git commit -m \"Añade pie de página\"", c:["git commit -m (\"[^\"]+\"|'[^']+')"], out:"[footer 7b2c1d0] Añade pie de página\n 2 files changed, 24 insertions(+)"},
+  {t:"Vuelve a la rama principal.", s:"git switch main", c:["git (switch|checkout) main"], out:"Cambiado a rama 'main'"},
+  {t:"Une el trabajo de <code>footer</code> a <code>main</code>.", s:"git merge footer", out:"Fast-forward\n footer.html | 20 ++++++++++++++++++++"},
+  {t:"Súbelo al repositorio remoto.", s:"git push", c:["git push( origin main)?"], out:"To github.com:alumno/web.git\n   4e1a2b9..7b2c1d0  main -> main"}
+]});
+
+RETO("distribucion-apps", {title:"Reto: crea el instalador de Windows", os:"cmd",
+  intro:"Tu aplicación GestorNotas ya está compilada en la carpeta <code>target</code> como <code>gestor.jar</code>. Genera un instalador MSI que cree un acceso directo en el escritorio.", steps:[
+  {t:"Usa jpackage con el nombre <code>GestorNotas</code>, la carpeta de entrada <code>target/</code>, el JAR principal <code>gestor.jar</code>, el tipo <code>msi</code> y el acceso directo de Windows.", s:"jpackage --name GestorNotas --input target/ --main-jar gestor.jar --type msi --win-shortcut", c:["jpackage( --name gestornotas| --input target/?| --main-jar gestor\\.jar| --type msi| --win-shortcut){5}"], out:"GestorNotas-1.0.msi creado en C:\\Users\\alumno\\proyecto", tip:"Cada opción empieza por dos guiones: --name, --input, --main-jar, --type y --win-shortcut."}
+]});
