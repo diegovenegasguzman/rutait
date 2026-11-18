@@ -13,7 +13,7 @@ TEMA("programacion", {
   },
   {
    "h": "Operadores",
-   "html": "\n      <ul>\n        <li><b>Aritméticos:</b> <code>+ - * /</code> y <code>%</code>, que da el <b>resto</b> de una división. <code>7 % 3</code> vale 1. Sirve, por ejemplo, para saber si un número es par: <code>n % 2 == 0</code>.</li>\n        <li><b>De comparación:</b> <code>==</code> (igual), <code>!=</code> (distinto), <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> y <code>&gt;=</code>. Devuelven <code>true</code> o <code>false</code>.</li>\n        <li><b>Lógicos:</b> <code>&amp;&amp;</code> (Y: verdadero solo si ambas condiciones lo son), <code>||</code> (O: verdadero si al menos una lo es) y <code>!</code> (NO: invierte el valor).</li>\n      </ul>\n      <div class=\"note\"><b>Error típico</b>Con dos enteros, <code>7 / 2</code> da 3, no 3,5: la división entre <code>int</code> descarta los decimales. Para obtener 3,5 al menos uno de los dos debe ser <code>double</code>: <code>7.0 / 2</code>.</div>"
+   "html": "\n<p>Los operadores son los símbolos que hacen cálculos y comparaciones con las variables. Hay tres grupos.</p>\n<ul>\n        <li><b>Aritméticos:</b> <code>+ - * /</code> y <code>%</code>, que da el <b>resto</b> de una división. <code>7 % 3</code> vale 1. Sirve, por ejemplo, para saber si un número es par: <code>n % 2 == 0</code>.</li>\n        <li><b>De comparación:</b> <code>==</code> (igual), <code>!=</code> (distinto), <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> y <code>&gt;=</code>. Devuelven <code>true</code> o <code>false</code>.</li>\n        <li><b>Lógicos:</b> <code>&amp;&amp;</code> (Y: verdadero solo si ambas condiciones lo son), <code>||</code> (O: verdadero si al menos una lo es) y <code>!</code> (NO: invierte el valor).</li>\n      </ul>\n      <div class=\"note\"><b>Error típico</b>Con dos enteros, <code>7 / 2</code> da 3, no 3,5: la división entre <code>int</code> descarta los decimales. Para obtener 3,5 al menos uno de los dos debe ser <code>double</code>: <code>7.0 / 2</code>.</div>"
   },
   {
    "h": "Condicionales",
@@ -25,7 +25,7 @@ TEMA("programacion", {
   },
   {
    "h": "Compilado o interpretado",
-   "html": "\n      <ul>\n        <li><b>Compilado:</b> un compilador traduce todo el código a lenguaje máquina antes de ejecutarlo (C, C++).</li>\n        <li><b>Interpretado:</b> un intérprete lee y ejecuta el código línea a línea (Python, JavaScript).</li>\n        <li><b>Java</b> usa un sistema mixto: se compila a <b>bytecode</b> (archivos <code>.class</code>) y la <b>máquina virtual de Java (JVM)</b> lo ejecuta. Por eso el mismo programa funciona en Windows, Linux o macOS.</li>\n      </ul>"
+   "html": "\n<p>El ordenador solo entiende lenguaje máquina, así que el código hay que traducirlo. Hay dos formas de hacerlo.</p>\n<ul>\n        <li><b>Compilado:</b> un compilador traduce todo el código a lenguaje máquina antes de ejecutarlo (C, C++).</li>\n        <li><b>Interpretado:</b> un intérprete lee y ejecuta el código línea a línea (Python, JavaScript).</li>\n        <li><b>Java</b> usa un sistema mixto: se compila a <b>bytecode</b> (archivos <code>.class</code>) y la <b>máquina virtual de Java (JVM)</b> lo ejecuta. Por eso el mismo programa funciona en Windows, Linux o macOS.</li>\n      </ul>"
   }
  ],
  "quiz": [

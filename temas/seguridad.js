@@ -9,11 +9,11 @@ TEMA("seguridad", {
   },
   {
    "h": "Amenaza, vulnerabilidad y riesgo",
-   "html": "\n      <ul>\n        <li><b>Vulnerabilidad:</b> una debilidad del sistema. Por ejemplo, un servidor sin actualizar.</li>\n        <li><b>Amenaza:</b> algo que puede aprovechar esa debilidad: un atacante, un virus, un incendio…</li>\n        <li><b>Riesgo:</b> la probabilidad de que la amenaza ocurra multiplicada por el daño que causaría.</li>\n      </ul>\n      <p>No existe la seguridad absoluta. El objetivo es reducir el riesgo a un nivel aceptable con un coste razonable.</p>"
+   "html": "\n<p>Para hablar de seguridad con precisión se usan tres conceptos distintos que a menudo se confunden.</p>\n<ul>\n        <li><b>Vulnerabilidad:</b> una debilidad del sistema. Por ejemplo, un servidor sin actualizar.</li>\n        <li><b>Amenaza:</b> algo que puede aprovechar esa debilidad: un atacante, un virus, un incendio…</li>\n        <li><b>Riesgo:</b> la probabilidad de que la amenaza ocurra multiplicada por el daño que causaría.</li>\n      </ul>\n      <p>No existe la seguridad absoluta. El objetivo es reducir el riesgo a un nivel aceptable con un coste razonable.</p>"
   },
   {
    "h": "Tipos de malware",
-   "html": "\n      <table>\n        <tr><th>Tipo</th><th>Cómo actúa</th></tr>\n        <tr><td>Virus</td><td>Se adjunta a otros archivos y se activa al abrirlos.</td></tr>\n        <tr><td>Gusano</td><td>Se propaga solo por la red, sin intervención del usuario.</td></tr>\n        <tr><td>Troyano</td><td>Se hace pasar por un programa legítimo y abre una puerta al atacante.</td></tr>\n        <tr><td>Ransomware</td><td>Cifra los archivos y pide un rescate para recuperarlos.</td></tr>\n        <tr><td>Spyware</td><td>Espía la actividad del usuario y roba datos.</td></tr>\n        <tr><td>Keylogger</td><td>Registra las teclas pulsadas para robar contraseñas.</td></tr>\n      </table>"
+   "html": "\n<p>Malware es cualquier programa hecho para dañar o robar. Se clasifica según cómo se propaga y qué hace.</p>\n<table>\n        <tr><th>Tipo</th><th>Cómo actúa</th></tr>\n        <tr><td>Virus</td><td>Se adjunta a otros archivos y se activa al abrirlos.</td></tr>\n        <tr><td>Gusano</td><td>Se propaga solo por la red, sin intervención del usuario.</td></tr>\n        <tr><td>Troyano</td><td>Se hace pasar por un programa legítimo y abre una puerta al atacante.</td></tr>\n        <tr><td>Ransomware</td><td>Cifra los archivos y pide un rescate para recuperarlos.</td></tr>\n        <tr><td>Spyware</td><td>Espía la actividad del usuario y roba datos.</td></tr>\n        <tr><td>Keylogger</td><td>Registra las teclas pulsadas para robar contraseñas.</td></tr>\n      </table>"
   },
   {
    "h": "Ingeniería social",

@@ -183,21 +183,34 @@ article.doc{max-width:720px}
 .btn.line2:hover{border-color:var(--ink)}
 .btn.light{background:var(--white);color:var(--ink)}
 
-function checkHTML(c,i){
-  return `<div class="check" data-i="${i}"><div class="ct">Pregunta rápida</div><div class="cq">${esc(c.q)}</div>
-    <div class="opts">${c.o.map((o,k)=>`<button class="opt" data-k="${k}"><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("")}</div></div>`;
-}
-function bindChecks(id){
-  document.querySelectorAll(".check").forEach(box=>{
-    const c = TEMAS[id].sections[+box.dataset.i].check;
-    box.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
-      const k = +b.dataset.k, ok = k===c.a, r = b.getBoundingClientRect();
-      box.querySelectorAll(".opt").forEach((x,j)=>{ x.disabled = true; x.classList.add(j===c.a ? "right" : j===k ? "wrong" : "fade"); });
-      box.insertAdjacentHTML("beforeend", `<div class="expl ${ok?"good":"bad"}"><b>${ok ? "¡Bien visto!" : "Casi. Es la " + "ABCD"[c.a]}</b>${esc(c.e)}</div>`);
-      if(ok) burst(r.left + 30, r.top + r.height/2, 30);
-    }));
-  });
-}
+/* ---------- Terminal simulado ---------- */
+.term{margin:12px 0 22px;border-radius:16px;overflow:hidden;background:#0F1623;color:#D8DEE9;font-family:var(--mono);font-size:14.5px;line-height:1.6}
+.term .tbar{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#1B2433;font-family:var(--body);font-size:13.5px;color:#AEB8C8}
+.term .dots3{display:flex;gap:6px}.term .dots3 i{width:11px;height:11px;border-radius:50%;background:#3A4559}
+.term .tt{font-weight:700;color:#E6EAF2}
+.term .tprog{margin-left:auto;font-variant-numeric:tabular-nums}
+.term .ttask{padding:12px 16px;background:color-mix(in srgb,var(--c) 26%,#0F1623);font-family:var(--body);font-size:16px;color:#fff;line-height:1.45}
+.term .ttask b{display:block;font-size:13px;color:color-mix(in srgb,var(--c) 25%,white);margin-bottom:2px}
+.term .ttask code{font-family:var(--mono);font-size:.9em;background:rgba(255,255,255,.14);padding:1px 6px;border-radius:5px}
+.term .ttask.ok{background:color-mix(in srgb,var(--ok) 32%,#0F1623)}
+.term .tscreen{padding:14px 16px 16px;max-height:380px;overflow-y:auto}
+.term .tl,.term .tline{display:flex;gap:9px;align-items:baseline;white-space:pre-wrap;word-break:break-word}
+.term .tp{color:#69DB7C;flex:none}
+.term .tin{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:inherit;caret-color:#69DB7C;padding:0}
+.term .tline:focus-within{outline:2px solid color-mix(in srgb,var(--c) 70%,white);outline-offset:4px;border-radius:4px}
+.term pre.to{margin:2px 0 10px;padding:0;background:none;color:#AEB8C8;font:inherit;white-space:pre-wrap;border-radius:0}
+.term .terr{color:#FFA8A8;margin:2px 0 10px;font-family:var(--body);font-size:15px}
+.term .tsol{color:#FFE066;margin:2px 0 10px;font-family:var(--body);font-size:15px}
+.term .tsol code{font-family:var(--mono);color:#fff}
+.term .tfoot{display:flex;gap:10px;padding:0 16px 14px}
+.term .tbtn2{background:transparent;border:1px solid #46526A;color:#D8DEE9;border-radius:99px;padding:6px 14px;font-family:var(--body);font-size:14px}
+.term .tbtn2:hover{border-color:#AEB8C8}
+.term.shake{animation:tshake .32s}
+@keyframes tshake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.term.shake{animation:none}}
+.locked{opacity:.55;cursor:not-allowed;pointer-events:none}
+.lockmsg{font-size:14px;color:var(--ink3);margin-top:8px}
+
 /* ---------- Test ---------- */
 .qwrap{max-width:760px;margin:0 auto;padding:40px 0 20px}
 .qtop{display:flex;align-items:center;justify-content:space-between;gap:16px}
@@ -332,13 +345,16 @@ footer p{max-width:62ch}
 <script>
 const TEMAS = {};
 function TEMA(id, data){ TEMAS[id] = data; }
+const PRACT = [], CMDQS = [];
+function PRACTICA(id, sec, data){ PRACT.push([id, sec, data]); }
+function CMDQ(id, list){ CMDQS.push([id, list]); }
 const PASS = 70;
 
 /* =========================================================
    PROGRESO
    ========================================================= */
 const KEY = "rutait-v2";
-let P = {best:{}, read:{}};
+let P = {best:{}, read:{}, term:{}};
 try{ const s = localStorage.getItem(KEY); if(s) P = Object.assign(P, JSON.parse(s)); }catch(e){}
 const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(P)); }catch(e){} };
 const course = id => COURSES.find(c => c.id === id);
@@ -492,24 +508,29 @@ function viewModule(c, m){
   </div>`;
 }
 
+function testLink(id, lock, cls, label){
+  return lock ? `<a class="${cls} locked" aria-disabled="true" data-label="${label}">🔒 ${label}</a>` : `<a class="${cls}" href="#test-${id}">${label}</a>`;
+}
 function viewTema(id){
   const t = TEMAS[id]; P.read[id] = true; save();
+  const lock = !termsDone(id);
   const mod = currentCourse.modules.find(m=>m.t.includes(id));
   return `<div class="wrap"><div class="tgrid">
     <aside class="toc">
       <a class="back" href="${mod ? `#modulo-${currentCourse.id}-${mod.c}` : `#curso-${currentCourse.id}`}">← ${mod ? mod.n : currentCourse.short}</a>
       <ol>${t.sections.map((s,i)=>`<li><a href="#tema-${id}" data-sec="s${i}">${s.h}</a></li>`).join("")}</ol>
-      <a class="btn main tbtn" href="#test-${id}">Hacer el test</a>
+      ${testLink(id, lock, "btn main tbtn", "Hacer el test")}
+      ${lock ? `<p class="lockmsg">Se desbloquea al completar la práctica de terminal.</p>` : ""}
     </aside>
     <article class="doc">
       <div class="mod">${mod ? mod.n : currentCourse.short}</div>
       <h1>${t.title}</h1>
       <p class="intro">${t.intro}</p>
       <p class="meta">${t.mins} minutos de lectura. Test de ${t.quiz.length} preguntas al final; se supera con un ${PASS}%.</p>
-      ${t.sections.map((s,i)=>`<section id="s${i}"><h2>${s.h}</h2>${s.html}${s.check ? checkHTML(s.check,i) : ""}</section>`).join("")}
+      ${t.sections.map((s,i)=>`<section id="s${i}"><h2>${s.h}</h2>${s.html}${s.term ? termHTML(s.term, id+":"+i, "tema") : ""}${s.check ? checkHTML(s.check,i) : ""}</section>`).join("")}
       <div class="end">
-        <div><h3>Comprueba lo que has aprendido</h3><p>${t.quiz.length} preguntas con explicación de cada respuesta.</p></div>
-        <a class="btn light" href="#test-${id}">Empezar el test</a>
+        <div><h3>Comprueba lo que has aprendido</h3><p>${t.quiz.length} preguntas con explicación de cada respuesta.${lock ? " Antes tienes que completar las prácticas de terminal de este tema." : ""}</p></div>
+        ${testLink(id, lock, "btn light", "Empezar el test")}
       </div>
     </article>
   </div></div>`;
@@ -530,19 +551,99 @@ function bindChecks(id){
     }));
   });
 }
+
+/* ---------- Terminal simulado ---------- */
+const TS = {};
+const PROMPTS = {linux:h=>`alumno@${h||"pc"}:~$`, win:()=>"PS C:\\Users\\alumno>", cmd:()=>"C:\\Users\\alumno>", cisco:h=>`${h||"R1"}#`, sql:()=>"mysql>", git:h=>`alumno@${h||"pc"}:~/proyecto$`};
+const OSNAME = {linux:"Terminal de Linux", win:"PowerShell", cmd:"Símbolo del sistema", cisco:"Consola del router", sql:"Cliente MySQL", git:"Terminal de Linux"};
+const promptOf = (T, st) => st.p || (PROMPTS[T.os||"linux"] || PROMPTS.linux)(T.host);
+const normCmd = s => s.trim().replace(/\s+/g," ");
+const sqlN = v => normCmd(v).replace(/\s*([(),=;<>*])\s*/g,"$1").replace(/;+$/,"").replace(/"/g,"'");
+const rxEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+function cmdOk(T, st, v){
+  const f = /^(win|cmd|cisco|sql)$/.test(T.os) ? "i" : "";
+  if(T.os==="sql" && !st.c) return [st.s, ...(st.alt||[])].some(x => sqlN(x).toLowerCase() === sqlN(v).toLowerCase());
+  const list = st.c || [rxEsc(st.s)], val = T.os==="sql" ? sqlN(v) : normCmd(v);
+  return list.some(r => new RegExp("^(?:" + (r instanceof RegExp ? r.source : r) + ")$", f).test(val));
+}
+function termState(key){ return TS[key] || (TS[key] = {i:0, fails:0, sol:false, clean:true, hist:[]}); }
+function termHTML(T, key, mode){
+  const S = termState(key), n = T.steps.length;
+  if(mode==="tema" && P.term[key] && !S.again && S.i===0 && !S.hist.length){
+    T.steps.forEach(st=>{ S.hist.push(`<div class="tl"><span class="tp">${esc(promptOf(T,st))}</span><span>${esc(st.s)}</span></div>`); if(st.out) S.hist.push(`<pre class="to">${esc(st.out)}</pre>`); });
+    S.i = n;
+  }
+  const done = S.i >= n, st = T.steps[Math.min(S.i, n-1)];
+  const task = mode==="test" ? "" : done
+    ? `<div class="ttask ok"><b>Práctica completada</b>Has escrito bien todos los comandos.</div>`
+    : `<div class="ttask"><b>${n>1 ? `Tarea ${S.i+1} de ${n}` : "Tarea"}</b>${st.t}</div>`;
+  const foot = [];
+  if(!done && S.fails>=2 && !S.sol) foot.push(`<button type="button" class="tbtn2" data-act="sol">Ver la solución</button>`);
+  if(done && mode==="tema") foot.push(`<button type="button" class="tbtn2" data-act="again">Repetir la práctica</button>`);
+  return `<div class="term" data-key="${key}">
+    <div class="tbar"><span class="dots3" aria-hidden="true"><i></i><i></i><i></i></span><span class="tt">${esc(T.title || OSNAME[T.os||"linux"])}</span>${n>1 && mode!=="test" ? `<span class="tprog">${Math.min(S.i+(done?0:1), n)} / ${n}</span>` : ""}</div>
+    ${task}
+    <div class="tscreen" role="log" aria-live="polite">${S.hist.join("")}${done ? "" : `<form class="tline"><label class="tp" for="in-${key}">${esc(promptOf(T,st))}</label><input class="tin" id="in-${key}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" aria-label="Escribe el comando y pulsa Intro"></form>`}</div>
+    ${foot.length ? `<div class="tfoot">${foot.join("")}</div>` : ""}
+  </div>`;
+}
+function bindTerm(el, T, key, mode, onDone, focus){
+  const S = termState(key), n = T.steps.length;
+  const redraw = (f, fx) => { const tmp = document.createElement("div"); tmp.innerHTML = termHTML(T, key, mode); const nw = tmp.firstElementChild; el.replaceWith(nw); bindTerm(nw, T, key, mode, onDone, f); if(fx) fx(nw); };
+  const scr = el.querySelector(".tscreen"); scr.scrollTop = scr.scrollHeight;
+  const form = el.querySelector("form"), inp = el.querySelector(".tin");
+  if(inp && focus) inp.focus({preventScroll:true});
+  el.addEventListener("click", e => { if(e.target === scr || e.target === el.querySelector(".tline")) inp && inp.focus(); });
+  if(form) form.addEventListener("submit", e => {
+    e.preventDefault();
+    const v = inp.value; if(!v.trim()) return;
+    const st = T.steps[S.i];
+    S.hist.push(`<div class="tl"><span class="tp">${esc(promptOf(T,st))}</span><span>${esc(v)}</span></div>`);
+    if(cmdOk(T, st, v)){
+      if(st.out) S.hist.push(`<pre class="to">${esc(st.out)}</pre>`);
+      S.i++; S.fails = 0; S.sol = false;
+      const finished = S.i >= n;
+      if(finished && mode==="tema"){ P.term[key] = 1; save(); }
+      redraw(!finished, nw => { const r = nw.getBoundingClientRect(); if(mode==="tema" || S.clean) burst(r.left + 60, r.top + 40, finished ? 60 : 24); if(finished) onDone && onDone(S.clean); });
+    } else {
+      S.fails++; S.clean = false;
+      S.hist.push(`<div class="terr">${S.fails===1 && st.tip ? esc(st.tip) : "Ese comando no hace lo que pide la tarea. Revisa la orden y sus opciones."}</div>`);
+      redraw(true, nw => { if(!reduce){ nw.classList.add("shake"); } });
+    }
+  });
+  el.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
+    if(b.dataset.act==="sol"){ S.sol = true; S.clean = false; S.hist.push(`<div class="tsol">Solución: <code>${esc(T.steps[S.i].s)}</code>. Escríbela tú para continuar.</div>`); redraw(true); }
+    else { delete TS[key]; termState(key).again = true; redraw(true); }
+  }));
+}
+function termsDone(id){ return TEMAS[id].sections.every((s,i) => !s.term || P.term[id+":"+i]); }
+function bindTerms(id){
+  document.querySelectorAll(".doc .term").forEach(el => {
+    const i = +el.dataset.key.split(":")[1];
+    bindTerm(el, TEMAS[id].sections[i].term, el.dataset.key, "tema", () => refreshLocks(id), false);
+  });
+}
+function refreshLocks(id){
+  if(!termsDone(id)) return;
+  document.querySelectorAll("a.locked").forEach(a => { a.classList.remove("locked"); a.removeAttribute("aria-disabled"); a.href = "#test-"+id; a.textContent = a.dataset.label; });
+  document.querySelectorAll(".lockmsg").forEach(m => m.remove());
+}
 /* ---------- Test ---------- */
 let Q = null;
 function startQuiz(id){
   const t = TEMAS[id];
   const order = t.quiz.map((_,i)=>i).sort(()=>Math.random()-.5);
   Q = {id, order, i:0, ok:0, streak:0, ans:null, log:[]};
+  Object.keys(TS).forEach(k => { if(k.startsWith("q:")) delete TS[k]; });
 }
 function viewTest(id){
   if(!Q || Q.id!==id) startQuiz(id);
   const t = TEMAS[id];
+  if(!termsDone(id)) return `<div class="wrap"><div class="qwrap"><div class="qcard res"><h2>Primero, la práctica</h2><p>Este test se desbloquea cuando completas las prácticas de terminal del tema. Escribe bien cada comando y vuelve aquí.</p><div class="acts"><a class="btn main" href="#tema-${id}">Ir a la práctica</a></div></div></div></div>`;
   if(Q.i >= Q.order.length) return viewResult(id);
   const it = t.quiz[Q.order[Q.i]], a = Q.ans;
-  const dots = Q.order.map((_,k)=> k<Q.i ? `<i class="${Q.log[k].ok?"ok":"ko"}"></i>` : k===Q.i ? `<i class="${a===null?"now":(a===it.a?"ok":"ko")}"></i>` : `<i></i>`).join("");
+  const isCmd = it.t==="cmd", good = isCmd ? a==="ok" : a===it.a;
+  const dots = Q.order.map((_,k)=> k<Q.i ? `<i class="${Q.log[k].ok?"ok":"ko"}"></i>` : k===Q.i ? `<i class="${a===null?"now":(good?"ok":"ko")}"></i>` : `<i></i>`).join("");
   return `<div class="wrap"><div class="qwrap">
     <div class="qtop">
       <a class="back" href="#tema-${id}">← Volver a los apuntes</a>
@@ -553,12 +654,12 @@ function viewTest(id){
       <div class="qnum">Pregunta ${Q.i+1} de ${Q.order.length}</div>
       <div class="qtext">${esc(it.q)}</div>
       ${it.code ? `<pre>${esc(it.code)}</pre>` : ""}
-      <div class="opts">${it.o.map((o,k)=>{
+      ${isCmd ? termHTML(cmdTerm(it), "q:"+Q.i, "test") : `<div class="opts">${it.o.map((o,k)=>{
         let c = "opt";
         if(a!==null){ if(k===it.a) c+=" right"; else if(k===a) c+=" wrong"; else c+=" fade"; }
         return `<button class="${c}" data-k="${k}" ${a!==null?"disabled":""}><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`;
-      }).join("")}</div>
-      ${a!==null ? `<div class="expl ${a===it.a?"good":"bad"}"><b>${a===it.a ? praise() : "La respuesta correcta es la " + "ABCD"[it.a]}</b>${esc(it.e)}</div>
+      }).join("")}</div>`}
+      ${a!==null ? `<div class="expl ${good?"good":"bad"}"><b>${good ? praise() : isCmd ? "Lo has conseguido, pero no a la primera: cuenta como fallo" : "La respuesta correcta es la " + "ABCD"[it.a]}</b>${isCmd ? `Comando: <code>${esc(it.s)}</code>. ` : ""}${esc(it.e)}</div>
         <div class="qfoot"><button class="btn main" id="next">${Q.i+1<Q.order.length?"Siguiente pregunta":"Ver mi resultado"}</button></div>` : ""}
     </div>
   </div></div>`;
@@ -567,6 +668,15 @@ const praises = ["¡Correcto!","¡Exacto!","¡Muy bien!","¡Eso es!","¡Perfecto
 const praise = () => Q.streak >= 3 ? `¡${Q.streak} seguidas!` : praises[(Q.i + Q.ok) % praises.length];
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
+function cmdTerm(it){ return {os:it.os, host:it.host, title:it.title, steps:[{t:"", s:it.s, c:it.c, out:it.out, p:it.p, tip:it.tip}]}; }
+function answerCmd(clean){
+  const it = TEMAS[Q.id].quiz[Q.order[Q.i]];
+  Q.ans = clean ? "ok" : "ko";
+  if(clean){ Q.ok++; Q.streak++; } else Q.streak = 0;
+  Q.log[Q.i] = {ok:clean, q:it.q, right:it.s, e:it.e};
+  render(true);
+  const nx = document.getElementById("next"); if(nx) nx.focus({preventScroll:true});
+}
 function answer(k, btn){
   const it = TEMAS[Q.id].quiz[Q.order[Q.i]];
   Q.ans = k;
@@ -714,7 +824,7 @@ function render(keep){
   let tab = "inicio";
   if((m = r.match(/^curso-(\w+)$/)) && course(m[1])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewCourse(currentCourse); }
   else if((m = r.match(/^modulo-(\w+)-(\w+)$/)) && course(m[1]) && course(m[1]).modules.find(x=>x.c===m[2])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewModule(currentCourse, currentCourse.modules.find(x=>x.c===m[2])); }
-  else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); bindChecks(m[1]); }
+  else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); bindChecks(m[1]); bindTerms(m[1]); }
   else if((m = r.match(/^test-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTest(m[1]); bindTest(); animateResult(); }
   else if(r==="herramientas"){ tab="herramientas"; setColor(null); app.innerHTML = viewTools(); bindTools(); }
   else { setColor(null); app.innerHTML = viewHome(); if(firstHome && !reduce){ document.body.classList.add("anim"); } firstHome = false; bindMap(); }
@@ -725,6 +835,8 @@ function ensureCourse(t){ if(!currentCourse.modules.some(m=>m.t.includes(t))) cu
 function bindTest(){
   document.querySelectorAll(".opt:not(:disabled)").forEach(b=>b.addEventListener("click",()=>answer(+b.dataset.k,b)));
   const nx = document.getElementById("next"); if(nx) nx.addEventListener("click",()=>{ Q.i++; Q.ans=null; render(true); window.scrollTo({top:0}); });
+  const tq = document.querySelector(".qcard .term");
+  if(tq && Q.ans===null){ const it = TEMAS[Q.id].quiz[Q.order[Q.i]]; bindTerm(tq, cmdTerm(it), tq.dataset.key, "test", answerCmd, true); }
   const rt = document.getElementById("retry"); if(rt) rt.addEventListener("click",()=>{ Q=null; render(); });
 }
 function bindTools(){
@@ -754,8 +866,11 @@ function setupReading(on){
 addEventListener("hashchange", ()=>{ render(); window.scrollTo(0,0); });
 /* Carga de los temas (un archivo por tema en temas/) */
 const ids = [...new Set(COURSES.flatMap(c=>c.modules.flatMap(m=>m.t)))];
-Promise.all(ids.map(id=>new Promise(res=>{ const sc=document.createElement("script"); sc.src="temas/"+id+".js"; sc.onload=sc.onerror=res; document.head.appendChild(sc); })))
-  .then(()=>{ COURSES.forEach(c=>c.modules.forEach(m=>m.t=m.t.filter(t=>TEMAS[t]))); currentCourse = COURSES[0]; render(); });
+Promise.all([...ids.map(id=>"temas/"+id+".js"), "data/practicas.js"].map(src=>new Promise(res=>{ const sc=document.createElement("script"); sc.src=src; sc.onload=sc.onerror=res; document.head.appendChild(sc); })))
+  .then(()=>{
+    PRACT.forEach(([id, sec, d]) => { if(TEMAS[id] && TEMAS[id].sections[sec]) TEMAS[id].sections[sec].term = d; });
+    CMDQS.forEach(([id, l]) => { if(TEMAS[id]) TEMAS[id].quiz.push(...l.map(q => Object.assign({t:"cmd"}, q))); });
+    COURSES.forEach(c=>c.modules.forEach(m=>m.t=m.t.filter(t=>TEMAS[t]))); currentCourse = COURSES[0]; render(); });
 </script>
 </body>
 </html>
