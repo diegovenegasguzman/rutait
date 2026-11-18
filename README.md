@@ -31,3 +31,4 @@ Web estática: se puede publicar gratis con Cloudflare Pages conectando este rep
 - [Piper](https://github.com/rhasspy/piper) (voces neuronales), [onnxruntime-web](https://onnxruntime.ai/) 1.18 (MIT) y [piper-wasm](https://github.com/diffusionstudio/piper-wasm) (MIT). Se cargan en el navegador desde Hugging Face, cdnjs y jsDelivr; no se alojan en este repositorio.
   - Voz «David»: modelo es_ES-davefx-medium, conjunto de datos davefx con licencia CC0.
   - Voces «Mujer» y «Hombre»: modelo es_ES-sharvard-medium, basado en el corpus Sharvard (University of Edinburgh, https://datashare.ed.ac.uk/handle/10283/574), licencia CC BY 3.0.
+  - Voces «Ona» y «Pau» (catalán): modelos ca_ES-upc_ona-medium y ca_ES-upc_pau-x_low, basados en los corpus UPC Festcat (https://collectivat.cat/asr#upc-festcat-tts-corpora), licencia CC BY-SA 3.0 ES.

@@ -1,7 +1,12 @@
 // Sirve los archivos de la web y reenvía la descarga de las voces de Piper.
 // Solo se permiten las voces que usa la web, y la respuesta se guarda en la caché de Cloudflare.
 const ORIGEN = "https://huggingface.co/rhasspy/piper-voices/resolve/main/";
-const PERMITIDAS = /^es\/es_ES\/(davefx|sharvard)\/medium\/es_ES-(davefx|sharvard)-medium\.onnx(\.json)?$/;
+const PERMITIDAS = new RegExp("^(" + [
+  "es/es_ES/davefx/medium/es_ES-davefx-medium",
+  "es/es_ES/sharvard/medium/es_ES-sharvard-medium",
+  "ca/ca_ES/upc_ona/medium/ca_ES-upc_ona-medium",
+  "ca/ca_ES/upc_pau/x_low/ca_ES-upc_pau-x_low"
+].map(v => v.replace(/[./]/g, "\\$&")).join("|") + ")\\.onnx(\\.json)?$");
 
 export default {
   async fetch(request, env, ctx) {
