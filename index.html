@@ -211,6 +211,58 @@ article.doc{max-width:720px}
 .locked{opacity:.55;cursor:not-allowed;pointer-events:none}
 .lockmsg{font-size:14px;color:var(--ink3);margin-top:8px}
 
+/* ---------- Lector de PDF ---------- */
+.lwrap{max-width:860px;margin:0 auto}
+.ldrop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;border:2.5px dashed color-mix(in srgb,var(--c) 45%,var(--rule));border-radius:24px;background:var(--white);padding:46px 22px;cursor:pointer;transition:border-color .15s,background .15s}
+.ldrop:hover,.ldrop.over{border-color:var(--c);background:color-mix(in srgb,var(--c) 5%,white)}
+.ldrop:focus-within{outline:3px solid var(--c);outline-offset:3px}
+.ldrop b{font-family:var(--display);font-size:24px;letter-spacing:-.01em}
+.ldrop span{color:var(--ink3);font-size:15px}
+.ldrop input{position:absolute;width:1px;height:1px;opacity:0}
+.lpaste{margin-top:14px}
+.lpaste summary{cursor:pointer;font-weight:700;color:var(--ink2);font-size:15px}
+.lpaste textarea{width:100%;min-height:140px;margin:10px 0;border:1px solid var(--rule);border-radius:14px;padding:12px;font:inherit;font-size:15.5px;resize:vertical}
+.lmsg{margin-top:14px;padding:12px 16px;border-radius:14px;background:var(--white);border:1px solid var(--rule);font-size:15.5px}
+.lmsg.err{border-color:#E03131;color:#A51111}
+.llib{margin-top:28px}
+.llib h2{font-family:var(--display);font-size:20px;margin-bottom:10px}
+.llib ul{list-style:none;display:grid;gap:8px}
+.llib li{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:10px 12px 10px 16px}
+.llib li button.open{flex:1;text-align:left;background:none;border:0;font:inherit;cursor:pointer;padding:4px 0}
+.llib li b{display:block;font-size:15.5px}
+.llib li small{color:var(--ink3);font-size:13.5px}
+.llib .del{background:none;border:0;color:var(--ink3);font-size:14px;cursor:pointer;padding:6px 8px;border-radius:8px}
+.llib .del:hover{background:var(--paper);color:var(--ink)}
+.lplayer{position:sticky;top:72px;z-index:5;background:var(--ink);color:#fff;border-radius:24px;padding:18px 20px 16px;margin-bottom:20px}
+.lplayer .ltop{display:flex;align-items:baseline;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.lplayer .ltit{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.25;overflow-wrap:anywhere}
+.lplayer .lpage{font-size:14px;color:#C9D1DE;white-space:nowrap}
+.lplayer .lprog{display:flex;align-items:center;gap:12px;margin:12px 0 8px;font-size:13.5px;color:#C9D1DE;font-variant-numeric:tabular-nums}
+.lplayer input[type=range]{flex:1;accent-color:var(--c);height:22px}
+.lplayer .lctl{display:flex;align-items:center;justify-content:center;gap:12px}
+.lplayer .lbtn{width:52px;height:52px;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .15s,transform .1s}
+.lplayer .lbtn:hover{background:rgba(255,255,255,.2)}
+.lplayer .lbtn:active{transform:scale(.94)}
+.lplayer .lbtn.big{width:72px;height:72px;background:var(--c)}
+.lplayer .lbtn.big:hover{background:color-mix(in srgb,var(--c) 85%,white)}
+.lplayer .lbtn svg{width:24px;height:24px}
+.lplayer .lbtn.big svg{width:32px;height:32px}
+.lplayer .lbtn span{font-size:10px;font-weight:700;margin-top:-6px}
+.lplayer .lopts{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:center;margin-top:12px;font-size:14px;color:#C9D1DE}
+.lplayer .lopts label{display:flex;align-items:center;gap:6px;color:#C9D1DE;font-weight:400;margin:0}
+.lplayer .lerr{margin-top:8px;font-size:14px;color:#FFC9C9;text-align:center}
+.lplayer select{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:5px 8px;font:inherit;max-width:220px}
+.lplayer select option{color:var(--ink)}
+.lplayer .lclose{background:none;border:0;color:#C9D1DE;font:inherit;font-size:14px;cursor:pointer;text-decoration:underline}
+.ltext{background:var(--white);border:1px solid var(--rule);border-radius:20px;padding:24px 26px;font-size:18px;line-height:1.75;max-width:none}
+.ltext .lpg{display:block;margin:22px 0 8px;font-size:13px;font-weight:700;color:var(--ink3)}
+.ltext .lpg:first-child{margin-top:0}
+.ltext .s{cursor:pointer;border-radius:5px;padding:1px 0;transition:background .15s}
+.ltext .s:hover{background:color-mix(in srgb,var(--c) 10%,white)}
+.ltext .s.now{background:color-mix(in srgb,var(--c) 22%,white);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,white)}
+.ltext .s.read{color:var(--ink3)}
+.lkeys{font-size:14px;color:var(--ink3);margin-top:14px}
+@media (prefers-reduced-motion:reduce){.ltext .s{transition:none}}
 /* ---------- Página de prácticas ---------- */
 .chips2{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 28px}
 .chips2 a{text-decoration:none;font-weight:700;font-size:15px;padding:8px 16px;border-radius:99px;border:2px solid var(--rule);background:var(--white)}
@@ -314,6 +366,28 @@ footer p{max-width:62ch}
 @media (max-width:640px){
   body{font-size:16px}
   .menu a{padding:7px 10px;font-size:14px}
+  .lwrap.on{display:flex;flex-direction:column}
+  .lwrap.on .ltext{order:1;padding:18px 18px;font-size:17px}
+  .lwrap.on .lkeys{order:2;display:none}
+  .lwrap.on .lplayer{order:3;top:auto;bottom:8px;margin:14px 0 0;padding:12px 14px;border-radius:20px;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+  .lplayer .ltit{font-size:15.5px}
+  .lplayer .lprog{margin:6px 0 4px}
+  .lplayer .lctl{gap:8px}
+  .lplayer .lbtn{width:46px;height:46px}
+  .lplayer .lbtn.big{width:60px;height:60px}
+  .lplayer .lopts{margin-top:8px;gap:6px 12px;font-size:13px}
+  .lplayer select{padding:3px 6px;max-width:150px}
+}
+@media (max-width:460px){
+  .menu{gap:0}
+  .menu a{padding:6px 7px;font-size:13.5px}
+  .brand .bt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+}
+@media (max-width:400px){
+  .menu a{padding:6px 5px;font-size:13px}
+}
+@media (max-width:370px){
+  .menu a{padding:6px 4px;font-size:12.5px}
   .brand em{display:none}
   .how{grid-template-columns:1fr;gap:20px}
   .mapbox{padding:20px 14px 10px;border-radius:20px}
@@ -335,11 +409,12 @@ footer p{max-width:62ch}
   <div class="wrap">
     <a class="brand" href="#inicio" aria-label="ITeca, inicio">
       <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 22 H13 C17 22 17 8 21 8 H26" fill="none" stroke="#1C7ED6" stroke-width="4.5" stroke-linecap="round"/><path d="M4 8 H9" fill="none" stroke="#E8590C" stroke-width="4.5" stroke-linecap="round"/><circle cx="4" cy="22" r="3.6" fill="#fff" stroke="#18202E" stroke-width="2.4"/><circle cx="26" cy="8" r="3.6" fill="#fff" stroke="#18202E" stroke-width="2.4"/></svg>
-      ITeca
+      <span class="bt">ITeca</span>
     </a>
     <nav class="menu" aria-label="Principal">
       <a href="#inicio" data-r="inicio">Cursos</a>
       <a href="#practicas" data-r="practicas">Prácticas</a>
+      <a href="#escuchar" data-r="escuchar">Escuchar</a>
       <a href="#herramientas" data-r="herramientas">Herramientas</a>
     </nav>
   </div>
@@ -706,6 +781,214 @@ function viewPractica(p){
     </div>
   </div></div>`;
 }
+
+/* ---------- Escuchar un PDF (lector en voz alta) ---------- */
+const synth = window.speechSynthesis;
+const LKEY = "iteca-lector";
+const L = {doc:null, i:0, playing:false, token:0, voices:[]};
+const ICON = {
+  play:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>',
+  pause:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4.2" height="14" rx="1.2"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.2"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v5h5"/></svg>',
+  fwd:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg>',
+  prev:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="5" width="2.6" height="14" rx="1"/><path d="M19 6.3v11.4a.9.9 0 0 1-1.4.75L9.4 12.75a.9.9 0 0 1 0-1.5l8.2-5.7A.9.9 0 0 1 19 6.3z"/></svg>',
+  next:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="16.4" y="5" width="2.6" height="14" rx="1"/><path d="M5 6.3v11.4a.9.9 0 0 0 1.4.75l8.2-5.7a.9.9 0 0 0 0-1.5L6.4 5.55A.9.9 0 0 0 5 6.3z"/></svg>'
+};
+function lLoad(){ try { return JSON.parse(localStorage.getItem(LKEY)) || {docs:[], rate:1, voice:""}; } catch(e){ return {docs:[], rate:1, voice:""}; } }
+function lSave(st){
+  try { localStorage.setItem(LKEY, JSON.stringify(st)); }
+  catch(e){ // sin espacio: se quedan solo los 2 documentos más recientes
+    st.docs = st.docs.slice(0, 2); try { localStorage.setItem(LKEY, JSON.stringify(st)); } catch(e2){}
+  }
+}
+let LS = lLoad();
+function lSavePos(){
+  if(!L.doc) return;
+  const d = LS.docs.find(x => x.id === L.doc.id); if(d){ d.i = L.i; d.t = Date.now(); }
+  LS.docs.sort((a,b) => b.t - a.t); lSave(LS);
+}
+/* Texto: limpiar y partir en frases cortas para poder pausar y rebobinar */
+function splitSentences(text){
+  const out = [];
+  text.split(/(?<=[.!?…;:])\s+(?=[«"“¿¡(A-ZÁÉÍÓÚÜÑ0-9•–-])/).forEach(sn => {
+    sn = sn.trim(); if(!sn) return;
+    while(sn.length > 220){ // frases larguísimas: cortar por comas o espacios
+      let cut = sn.lastIndexOf(", ", 200); if(cut < 80) cut = sn.lastIndexOf(" ", 200); if(cut < 40) cut = 200;
+      out.push(sn.slice(0, cut + 1).trim()); sn = sn.slice(cut + 1).trim();
+    }
+    if(sn) out.push(sn);
+  });
+  return out;
+}
+function cleanPage(raw){
+  return raw
+    .replace(/-\n(?=[a-záéíóúüñ])/g, "")        // palabras partidas con guion a final de línea
+    .split(/\n/).map(l => l.trim()).filter(l => l && !/^(\d{1,4}|página \d+( de \d+)?|\d+ ?\/ ?\d+)$/i.test(l))
+    .join("\n")
+    .replace(/\n(?=[a-záéíóúüñ,;)])/g, " ")    // saltos de línea en mitad de una frase
+    .replace(/\n/g, " ")
+    .replace(/\s{2,}/g, " ").trim();
+}
+function loadScript(src){ return new Promise((ok, ko) => { const sc = document.createElement("script"); sc.src = src; sc.onload = ok; sc.onerror = ko; document.head.appendChild(sc); }); }
+async function pdfToDoc(file, onProgress){
+  if(!window.pdfjsLib){ await loadScript("vendor/pdf.min.js"); pdfjsLib.GlobalWorkerOptions.workerSrc = "vendor/pdf.worker.min.js"; }
+  const pdf = await pdfjsLib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
+  const s = [];
+  for(let p = 1; p <= pdf.numPages; p++){
+    const tc = await (await pdf.getPage(p)).getTextContent();
+    const raw = tc.items.map(it => it.str + (it.hasEOL ? "\n" : "")).join("");
+    splitSentences(cleanPage(raw)).forEach(t => s.push([p, t]));
+    onProgress && onProgress(p, pdf.numPages);
+  }
+  return {id: file.name + ":" + file.size, name: file.name.replace(/\.pdf$/i, ""), pages: pdf.numPages, s, i: 0, t: Date.now()};
+}
+/* Tiempo estimado: unos 15 caracteres por segundo a velocidad normal */
+const CPS = 15;
+const fmtT = sec => { sec = Math.max(0, Math.round(sec)); const h = Math.floor(sec/3600), m = Math.floor(sec%3600/60), s = sec%60; return (h ? h + ":" + String(m).padStart(2,"0") : m) + ":" + String(s).padStart(2,"0"); };
+function lTimes(){
+  const s = L.doc.s, r = LS.rate || 1; let before = 0, total = 0;
+  for(let k = 0; k < s.length; k++){ total += s[k][1].length; if(k < L.i) before += s[k][1].length; }
+  return [before / CPS / r, total / CPS / r];
+}
+function pickVoice(){
+  L.voices = synth ? synth.getVoices() : [];
+  const es = L.voices.filter(v => /^es/i.test(v.lang));
+  return L.voices.find(v => v.name === LS.voice) || es.find(v => /es[-_]ES/i.test(v.lang)) || es[0] || L.voices[0] || null;
+}
+function lSpeak(){
+  const my = ++L.token; synth.cancel();
+  if(L.i >= L.doc.s.length){ L.playing = false; L.i = L.doc.s.length - 1; lUpdate(); return; }
+  const u = new SpeechSynthesisUtterance(L.doc.s[L.i][1]);
+  const v = pickVoice(); if(v){ u.voice = v; u.lang = v.lang; } else u.lang = "es-ES";
+  u.rate = LS.rate || 1;
+  u.onend = () => { if(my !== L.token || !L.playing) return; L.i++; lSavePos(); lUpdate(); lSpeak(); };
+  u.onerror = e => { if(my !== L.token || e.error === "interrupted" || e.error === "canceled") return; L.playing = false; lUpdate();
+    const er = document.getElementById("lerr"); if(er) er.textContent = "El navegador no ha podido leer en voz alta. Prueba con otra voz, o con Chrome, Edge o Safari."; };
+  synth.speak(u);
+}
+function lPlay(){ if(!synth) return; const er = document.getElementById("lerr"); if(er) er.textContent = ""; L.playing = true; lUpdate(); lSpeak(); }
+function lPause(){ L.playing = false; L.token++; synth && synth.cancel(); lSavePos(); lUpdate(); }
+function lToggle(){ L.playing ? lPause() : lPlay(); }
+function lGo(i){ L.i = Math.max(0, Math.min(L.doc.s.length - 1, i)); lSavePos(); lUpdate(true); if(L.playing) lSpeak(); }
+function lSkip(seconds){ // retrocede o avanza unos segundos, frase a frase
+  const want = Math.abs(seconds) * CPS * (LS.rate || 1), dir = Math.sign(seconds); let acc = 0, i = L.i;
+  if(dir < 0){ while(i > 0 && acc < want){ i--; acc += L.doc.s[i][1].length; } }
+  else { while(i < L.doc.s.length - 1 && acc < want){ acc += L.doc.s[i][1].length; i++; } }
+  lGo(i);
+}
+function lPage(dir){
+  const s = L.doc.s, cur = s[L.i][0];
+  if(dir < 0){ const first = s.findIndex(x => x[0] === cur); const target = (L.i - first > 2 || cur === 1) ? cur : cur - 1; lGo(s.findIndex(x => x[0] === target)); }
+  else { const k = s.findIndex(x => x[0] > cur); if(k >= 0) lGo(k); }
+}
+function lUpdate(scroll){
+  if(!L.doc || !document.querySelector(".lplayer")) return;
+  const [a, b] = lTimes(), s = L.doc.s;
+  document.querySelector(".lpage").textContent = `Página ${s[L.i][0]} de ${L.doc.pages}`;
+  const rg = document.getElementById("lrange"); rg.max = s.length - 1; rg.value = L.i; rg.setAttribute("aria-valuetext", `Página ${s[L.i][0]}, ${fmtT(a)} de ${fmtT(b)}`);
+  document.getElementById("lta").textContent = fmtT(a); document.getElementById("ltb").textContent = "-" + fmtT(b - a);
+  const pb = document.getElementById("lplay"); pb.innerHTML = L.playing ? ICON.pause : ICON.play; pb.setAttribute("aria-label", L.playing ? "Pausar" : "Reproducir");
+  const prev = document.querySelector(".ltext .s.now"); if(prev) prev.classList.remove("now");
+  const now = document.querySelector(`.ltext .s[data-i="${L.i}"]`);
+  if(now){ now.classList.add("now");
+    if(scroll || L.playing){
+      const r = now.getBoundingClientRect(), pl = document.querySelector(".lplayer").getBoundingClientRect();
+      const atBottom = pl.top > innerHeight / 2, top = atBottom ? 80 : pl.bottom, bottom = atBottom ? pl.top : innerHeight;
+      if(r.top < top + 10 || r.bottom > bottom - 20) window.scrollTo({top: scrollY + r.top - top - 40, behavior: reduce ? "auto" : "smooth"}); } }
+}
+function viewLector(){
+  const noVoice = !synth;
+  const lib = LS.docs.length ? `<div class="llib"><h2>Tus documentos</h2><ul>${LS.docs.map(d => `<li><button class="open" data-id="${esc(d.id)}"><b>${esc(d.name)}</b><small>${d.pages} páginas. Vas por la página ${d.s[Math.min(d.i, d.s.length-1)][0]}.</small></button><button class="del" data-del="${esc(d.id)}" aria-label="Quitar ${esc(d.name)} de la lista">Quitar</button></li>`).join("")}</ul></div>` : "";
+  if(!L.doc) return `<div class="wrap"><div class="lwrap">
+    <section class="chead"><div class="grade">Herramienta</div><h1>Escuchar un PDF</h1><p>Elige unos apuntes en PDF y el navegador te los lee en voz alta, como un podcast. Puedes pausar, rebobinar, cambiar la velocidad y seguir otro día donde lo dejaste. El archivo no sale de tu dispositivo.</p></section>
+    ${noVoice ? `<div class="lmsg err">Este navegador no puede leer en voz alta. Prueba con Chrome, Edge o Safari.</div>` : ""}
+    <label class="ldrop" id="ldrop"><input type="file" id="lfile" accept="application/pdf,.pdf"><b>Elige un PDF</b><span>o arrástralo aquí</span></label>
+    <details class="lpaste"><summary>O pega un texto</summary><textarea id="ltxt" placeholder="Pega aquí el texto que quieres escuchar"></textarea><button class="btn main" id="ltxtgo" type="button">Escuchar el texto</button></details>
+    <div id="lstatus" role="status"></div>
+    ${lib}
+  </div></div>`;
+  const d = L.doc; let html = "", pg = 0;
+  d.s.forEach(([p, t], k) => { if(p !== pg){ pg = p; html += `<span class="lpg">Página ${p}</span>`; } html += `<span class="s" data-i="${k}">${esc(t)}</span> `; });
+  const rates = [0.75, 1, 1.25, 1.5, 1.75, 2];
+  return `<div class="wrap"><div class="lwrap on" style="padding-top:28px">
+    <div class="lplayer" role="region" aria-label="Reproductor">
+      <div class="ltop"><span class="ltit">${esc(d.name)}</span><span class="lpage"></span></div>
+      <div class="lprog"><span id="lta">0:00</span><input type="range" id="lrange" min="0" step="1" aria-label="Posición en el documento"><span id="ltb">0:00</span></div>
+      <div class="lctl">
+        <button class="lbtn" id="lprev" aria-label="Página anterior">${ICON.prev}</button>
+        <button class="lbtn" id="lback" aria-label="Retroceder 15 segundos">${ICON.back}<span>15</span></button>
+        <button class="lbtn big" id="lplay" aria-label="Reproducir">${ICON.play}</button>
+        <button class="lbtn" id="lfwd" aria-label="Avanzar 15 segundos">${ICON.fwd}<span>15</span></button>
+        <button class="lbtn" id="lnext" aria-label="Página siguiente">${ICON.next}</button>
+      </div>
+      <div class="lopts">
+        <label>Velocidad <select id="lrate">${rates.map(r => `<option value="${r}" ${r===(LS.rate||1)?"selected":""}>${String(r).replace(".", ",")}×</option>`).join("")}</select></label>
+        <label>Voz <select id="lvoice"></select></label>
+        <button class="lclose" id="lclose" type="button">Otro documento</button>
+      </div>
+      <div class="lerr" id="lerr" role="alert"></div>
+    </div>
+    <div class="ltext" id="ltext">${html}</div>
+    <p class="lkeys">Atajos: barra espaciadora para pausar o seguir, flechas ← y → para retroceder o avanzar 15 segundos. Pulsa cualquier frase para escuchar desde ahí.</p>
+  </div></div>`;
+}
+function fillVoices(){
+  const sel = document.getElementById("lvoice"); if(!sel) return;
+  const vs = synth ? synth.getVoices() : [], cur = pickVoice();
+  const es = vs.filter(v => /^es/i.test(v.lang)), rest = vs.filter(v => !/^es/i.test(v.lang));
+  const opt = v => `<option value="${esc(v.name)}" ${cur && v.name===cur.name ? "selected" : ""}>${esc(v.name.replace(/^(Microsoft|Google) /, ""))} (${v.lang})</option>`;
+  sel.innerHTML = vs.length ? (es.length ? `<optgroup label="Español">${es.map(opt).join("")}</optgroup>` : "") + (rest.length ? `<optgroup label="Otros idiomas">${rest.map(opt).join("")}</optgroup>` : "") : `<option>Voz del sistema</option>`;
+}
+function openDoc(d){ L.doc = d; L.i = Math.min(d.i || 0, d.s.length - 1); L.playing = false; render(); window.scrollTo({top:0}); }
+function bindLector(){
+  if(!L.doc){
+    const inp = document.getElementById("lfile"), drop = document.getElementById("ldrop"), st = document.getElementById("lstatus");
+    const take = async file => {
+      if(!file) return;
+      if(!/pdf$/i.test(file.type) && !/\.pdf$/i.test(file.name)){ st.innerHTML = `<div class="lmsg err">Ese archivo no es un PDF.</div>`; return; }
+      const old = LS.docs.find(x => x.id === file.name + ":" + file.size); if(old) return openDoc(old);
+      st.innerHTML = `<div class="lmsg">Leyendo el PDF…</div>`;
+      try {
+        const d = await pdfToDoc(file, (p, n) => { st.innerHTML = `<div class="lmsg">Leyendo el PDF: página ${p} de ${n}…</div>`; });
+        if(!d.s.length){ st.innerHTML = `<div class="lmsg err">Este PDF no tiene texto que se pueda leer: probablemente son páginas escaneadas como imagen. Necesitarías pasarlo antes por un programa de OCR.</div>`; return; }
+        LS.docs = [d, ...LS.docs.filter(x => x.id !== d.id)].slice(0, 6); lSave(LS); openDoc(d);
+      } catch(e){ st.innerHTML = `<div class="lmsg err">No se ha podido abrir el PDF. Puede que esté dañado o protegido con contraseña.</div>`; }
+    };
+    inp.addEventListener("change", () => take(inp.files[0]));
+    ["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+    ["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+    drop.addEventListener("drop", e => take(e.dataTransfer.files[0]));
+    document.getElementById("ltxtgo").addEventListener("click", () => {
+      const t = document.getElementById("ltxt").value.trim(); if(!t) return;
+      const s = splitSentences(t.replace(/\s+/g, " ")).map(x => [1, x]);
+      const d = {id: "texto:" + t.length + ":" + t.slice(0, 20), name: t.slice(0, 40).trim() + (t.length > 40 ? "…" : ""), pages: 1, s, i: 0, t: Date.now()};
+      LS.docs = [d, ...LS.docs.filter(x => x.id !== d.id)].slice(0, 6); lSave(LS); openDoc(d);
+    });
+    document.querySelectorAll(".llib .open").forEach(b => b.addEventListener("click", () => openDoc(LS.docs.find(x => x.id === b.dataset.id))));
+    document.querySelectorAll(".llib .del").forEach(b => b.addEventListener("click", () => { LS.docs = LS.docs.filter(x => x.id !== b.dataset.del); lSave(LS); render(); }));
+    return;
+  }
+  fillVoices(); if(synth) synth.onvoiceschanged = fillVoices;
+  document.getElementById("lplay").addEventListener("click", lToggle);
+  document.getElementById("lback").addEventListener("click", () => lSkip(-15));
+  document.getElementById("lfwd").addEventListener("click", () => lSkip(15));
+  document.getElementById("lprev").addEventListener("click", () => lPage(-1));
+  document.getElementById("lnext").addEventListener("click", () => lPage(1));
+  document.getElementById("lrange").addEventListener("input", e => lGo(+e.target.value));
+  document.getElementById("lrate").addEventListener("change", e => { LS.rate = +e.target.value; lSave(LS); lUpdate(); if(L.playing) lSpeak(); });
+  document.getElementById("lvoice").addEventListener("change", e => { LS.voice = e.target.value; lSave(LS); if(L.playing) lSpeak(); });
+  document.getElementById("lclose").addEventListener("click", () => { lPause(); L.doc = null; render(); });
+  document.getElementById("ltext").addEventListener("click", e => { const s = e.target.closest(".s"); if(s){ lGo(+s.dataset.i); if(!L.playing) lPlay(); } });
+  lUpdate(true);
+}
+document.addEventListener("keydown", e => {
+  if(!L.doc || !document.querySelector(".lplayer") || e.target.closest("input,select,textarea,button")) return;
+  if(e.key === " "){ e.preventDefault(); lToggle(); }
+  else if(e.key === "ArrowLeft"){ e.preventDefault(); lSkip(-15); }
+  else if(e.key === "ArrowRight"){ e.preventDefault(); lSkip(15); }
+});
+window.addEventListener("pagehide", () => { if(L.playing) lPause(); });
+
 /* ---------- Test ---------- */
 let Q = null;
 function startQuiz(id){
@@ -897,6 +1180,7 @@ function setColor(c){ document.documentElement.style.setProperty("--c", c ? colo
 function render(keep){
   const r = (location.hash || "#inicio").slice(1); let m;
   if(!keep && r!==lastRoute && r.startsWith("test-")) Q = null;
+  if(r!=="escuchar" && L.playing) lPause();
   lastRoute = r;
   document.body.classList.remove("anim");
   let tab = "inicio";
@@ -906,6 +1190,7 @@ function render(keep){
   else if((m = r.match(/^test-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTest(m[1]); bindTest(); animateResult(); }
   else if((m = r.match(/^practicas(?:-(\w+))?$/))){ tab="practicas"; if(m[1] && course(m[1])) currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewPracticas(currentCourse); }
   else if((m = r.match(/^practica-([\w-]+)~(r?\d+)$/)) && ALLP.find(x=>x.key===m[1]+":"+m[2])){ tab="practicas"; const pr = ALLP.find(x=>x.key===m[1]+":"+m[2]); ensureCourse(pr.tema); setColor(currentCourse); app.innerHTML = viewPractica(pr); const el = document.querySelector(".pwrap .term"); bindTerm(el, pr.d, pr.key, "tema", ()=>{}, true); }
+  else if(r==="escuchar"){ tab="escuchar"; setColor(currentCourse); app.innerHTML = viewLector(); bindLector(); }
   else if(r==="herramientas"){ tab="herramientas"; setColor(null); app.innerHTML = viewTools(); bindTools(); }
   else { setColor(null); app.innerHTML = viewHome(); if(firstHome && !reduce){ document.body.classList.add("anim"); } firstHome = false; bindMap(); }
   document.querySelectorAll(".menu a").forEach(a=>a.classList.toggle("on", a.dataset.r===tab));

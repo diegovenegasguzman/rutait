@@ -24,3 +24,7 @@ Abre `index.html` en el navegador. No necesita servidor ni instalación.
 
 Web estática: se puede publicar gratis con Cloudflare Pages conectando este repositorio
 (sin comando de build y con `/` como carpeta de salida).
+
+## Software de terceros
+
+- [PDF.js](https://mozilla.github.io/pdf.js/) 3.11.174 (Mozilla), licencia Apache 2.0. Se usa en «Escuchar un PDF» para extraer el texto. Licencia en `vendor/pdfjs-LICENSE`.
