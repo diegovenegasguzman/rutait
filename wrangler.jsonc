@@ -1,0 +1,8 @@
+{
+  // Despliegue en Cloudflare Workers: archivos estáticos + un Worker mínimo
+  // que sirve las voces de Piper desde el propio dominio (Hugging Face no permite CORS).
+  "name": "rutait",
+  "main": "worker.js",
+  "compatibility_date": "2025-11-01",
+  "assets": { "directory": "./", "binding": "ASSETS" }
+}

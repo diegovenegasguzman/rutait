@@ -860,7 +860,7 @@ function pickVoice(){
   return L.voices.find(v => v.name === want) || es.find(v => /es[-_]ES/i.test(v.lang)) || es[0] || L.voices[0] || null;
 }
 /* ===== Voz natural (Piper): genera audio de verdad, que sigue sonando con la pantalla bloqueada ===== */
-const HF = "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_ES/";
+const HF = "voces/es/es_ES/"; // lo sirve worker.js desde el propio dominio
 const NVOICES = {
   "davefx":    {label:"David (España)", file:"davefx/medium/es_ES-davefx-medium", spk:null, mb:63},
   "sharvard-F":{label:"Mujer (España)", file:"sharvard/medium/es_ES-sharvard-medium", spk:"F", mb:77},
