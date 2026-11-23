@@ -1,5 +1,6 @@
 /* Cursos, módulos y unidades según los currículos estatales:
-   SMR (RD 1691/2007), ASIR (RD 1629/2009), DAM (RD 450/2010) y DAW (RD 686/2010).
+   SMR (RD 1691/2007), ASIR (RD 1629/2009), DAM (RD 450/2010), DAW (RD 686/2010)
+   y QSA, Química y Salud Ambiental (RD 283/2019).
    Cada unidad corresponde a un bloque de «contenidos básicos» del real decreto.
    u: [ ["Nombre de la unidad", ["id-tema", ...]], ... ]  (lista vacía = en preparación) */
 
@@ -302,6 +303,88 @@ const COURSES = [
        ["Contenido interactivo", ["web-interactiva"]],
        ["Diseño de webs accesibles", ["accesibilidad-web"]],
        ["Usabilidad y diseño amigable", ["usabilidad"]]
+     ]}
+   ]}
+  ,
+  /* Química y Salud Ambiental (RD 283/2019). Reparto por cursos según la Orden EFP/249/2020 del Ministerio.
+     No se incluyen FOL, EIE ni la FCT, igual que en el resto de cursos. */
+  {id:"qsa1", short:"1º QSA", family:"QSA", name:"Química y Salud Ambiental", grade:"Grado superior", year:"Primer curso",
+   desc:"Control de aguas, residuos, suelos y aire, gestión ambiental y el trabajo diario de una unidad de salud ambiental.",
+   modules:[
+     {c:"1546", n:"Sistemas de gestión ambiental", u:[
+       ["Elementos de un sistema de gestión de calidad", ["gestion-calidad"]],
+       ["Elaboración de procedimientos normalizados de trabajo", ["gestion-calidad"]],
+       ["Aspectos medioambientales", ["sga-iso14001"]],
+       ["Aplicación de sistemas de gestión ambiental", ["sga-iso14001"]],
+       ["Prevención de riesgos laborales y protección ambiental", ["prl-laboratorio"]]
+     ]},
+     {c:"1548", n:"Control de aguas", u:[
+       ["Focos de contaminación de aguas de uso y consumo", ["aguas-contaminacion"]],
+       ["Deficiencias técnico-sanitarias de las aguas", ["aguas-contaminacion"]],
+       ["Tratamiento de aguas potables", ["aguas-potabilizacion"]],
+       ["Tratamiento de aguas residuales", ["aguas-residuales"]],
+       ["Toma de muestras de aguas", ["aguas-muestreo"]],
+       ["Control de calidad físico-químico", ["aguas-fisicoquimico"]],
+       ["Control de calidad microbiológico", ["aguas-microbiologia"]],
+       ["Protocolos para minimizar los efectos sobre la salud (legionela)", ["legionela"]]
+     ]},
+     {c:"1549", n:"Control de residuos", u:[
+       ["Fuentes de contaminación del suelo", ["suelos-contaminados"]],
+       ["Sistemas de gestión de residuos sólidos", ["gestion-residuos"]],
+       ["Toma de muestras de suelos y residuos", ["suelos-muestreo"]],
+       ["Análisis de suelos y residuos", ["suelos-muestreo"]],
+       ["Protocolos de actuación", ["suelos-contaminados", "gestion-residuos"]]
+     ]},
+     {c:"1552", n:"Contaminación ambiental y atmosférica", u:[
+       ["Focos de contaminación atmosférica", ["contaminacion-atmosferica"]],
+       ["Toma de muestras de aire", ["calidad-aire"]],
+       ["Determinación de la calidad del aire", ["calidad-aire"]],
+       ["Depuración y control de emisiones", ["depuracion-emisiones"]],
+       ["Contaminación de origen físico", ["ruido-radiaciones"]],
+       ["Protocolos frente a la contaminación", ["depuracion-emisiones"]]
+     ]},
+     {c:"1554", n:"Unidad de salud ambiental", u:[
+       ["La unidad de salud ambiental", ["unidad-salud-ambiental"]],
+       ["Documentación sanitaria y medioambiental", ["unidad-salud-ambiental"]],
+       ["Gestión de recursos materiales", ["laboratorio-equipos"]],
+       ["Preparación y mantenimiento de equipos", ["laboratorio-equipos"]],
+       ["Informes y resúmenes de actividad", ["estadistica-informes"]]
+     ]}
+   ]},
+  {id:"qsa2", short:"2º QSA", family:"QSA", name:"Química y Salud Ambiental", grade:"Grado superior", year:"Segundo curso",
+   desc:"Educación para la salud, medio construido, seguridad alimentaria, control de plagas y el proyecto final.",
+   modules:[
+     {c:"1547", n:"Educación para la salud y el medio ambiente", u:[
+       ["Vigilancia epidemiológica", ["vigilancia-epidemiologica"]],
+       ["Planificación de actividades de educación sanitaria", ["educacion-sanitaria"]],
+       ["Información sobre problemas de salud ambientales", ["educacion-sanitaria"]],
+       ["Técnicas de comunicación", ["comunicacion-salud"]],
+       ["Evaluación de programas de educación sanitaria", ["comunicacion-salud"]]
+     ]},
+     {c:"1550", n:"Salud y riesgos del medio construido", u:[
+       ["Inspección y control en el medio construido", ["medio-construido"]],
+       ["Control de actividades MINP", ["actividades-minp"]],
+       ["Toma de muestras", ["medio-construido-muestras"]],
+       ["Análisis físico-químicos in situ", ["medio-construido-muestras"]],
+       ["Programas de vigilancia ambiental", ["vigilancia-ambiental"]]
+     ]},
+     {c:"1551", n:"Control y seguridad alimentaria", u:[
+       ["Inspección y control sanitario de alimentos (APPCC)", ["appcc"]],
+       ["Deficiencias técnico-sanitarias en alimentos", ["contaminacion-alimentos"]],
+       ["Toma de muestras de alimentos", ["alimentos-analisis"]],
+       ["Análisis de la calidad higiénico-sanitaria", ["alimentos-analisis"]],
+       ["Programas formativos y campañas de seguridad alimentaria y consumo", ["seguridad-alimentaria-consumo"]]
+     ]},
+     {c:"1553", n:"Control de organismos nocivos", u:[
+       ["Inspección de establecimientos", ["plagas-vectores"]],
+       ["Identificación y control de plagas y vectores", ["plagas-vectores"]],
+       ["Métodos de lucha y biocidas", ["biocidas"]],
+       ["Toma de muestras de biocidas y vectores", ["biocidas"]],
+       ["Establecimientos y servicios biocidas", ["control-integral-plagas"]],
+       ["Planes de control integral de plagas", ["control-integral-plagas"]]
+     ]},
+     {c:"1555", n:"Proyecto de química y salud ambiental", u:[
+       ["Planificación, desarrollo y presentación del proyecto", ["proyecto-qsa"]]
      ]}
    ]}
 ];

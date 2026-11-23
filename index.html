@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ITeca — Apuntes y tests para SMR, ASIR, DAM y DAW</title>
+<title>ITeca — Apuntes y tests para SMR, ASIR, DAM, DAW y QSA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F3F5F9; --white:#FFFFFF; --ink:#18202E; --ink2:#4A5568; --ink3:#7A8599; --rule:#DCE1EA;
-  --smr1:#E8590C; --smr2:#D98E04; --asir1:#1864AB; --asir2:#1C9BD6; --dam1:#087F5B; --dam2:#2F9E44; --daw1:#862E9C; --daw2:#C2255C; --asir:#1864AB;
+  --smr1:#E8590C; --smr2:#D98E04; --asir1:#1864AB; --asir2:#1C9BD6; --dam1:#087F5B; --dam2:#2F9E44; --daw1:#862E9C; --daw2:#C2255C; --qsa1:#0C8599; --qsa2:#5C940D; --asir:#1864AB;
   --ok:#0CA678; --ko:#E03131;
   --c:var(--asir1);
   --display:'Bricolage Grotesque',system-ui,sans-serif;
@@ -506,7 +506,10 @@ function mapSVG(){
   out += `<g class="grp" data-c="dam1" tabindex="-1">` + trunk.map((x,i)=>`<rect class="st" x="${x-10}" y="252" width="20" height="38" rx="10" stroke="var(--ink)" style="animation-delay:${1.2+i*.05}s"><title>${mods("dam1")[i].n} (común a 1º DAM y 1º DAW)</title></rect>`).join("") + `</g>`
     + lbl(60,236,"1º DAM y 1º DAW","var(--ink)",1.1)
     + `<text class="sublbl" x="60" y="318" style="animation-delay:1.2s">Primer curso común</text>`;
-  return `<svg id="map" viewBox="0 0 1000 360" role="img" aria-label="Mapa de cursos: cada línea es un curso y cada parada, un módulo">${out}</svg>`;
+  // QSA: primer curso a la izquierda, segundo a la derecha
+  out += g("qsa1", line("qsa1","M60 420 H500",.5) + spread(mods("qsa1").length,60,440).map((x,i)=>st(x,420,"qsa1",mods("qsa1")[i].n,1.6+i*.05)).join("") + lbl(60,390,course("qsa1").short,"var(--qsa1)",1.5));
+  out += g("qsa2", line("qsa2","M500 420 H940",.6) + spread(mods("qsa2").length,560,940).map((x,i)=>st(x,420,"qsa2",mods("qsa2")[i].n,1.7+i*.05)).join("") + lbl(560,390,course("qsa2").short,"var(--qsa2)",1.6));
+  return `<svg id="map" viewBox="0 0 1000 450" role="img" aria-label="Mapa de cursos: cada línea es un curso y cada parada, un módulo">${out}</svg>`;
 }
 function bindMap(){
   const svg = document.getElementById("map"); if(!svg) return;
@@ -536,8 +539,8 @@ function viewHome(){
   }).join("");
   return `<div class="wrap">
     <section class="hero">
-      <h1>Tu ciclo de informática, explicado tema a tema</h1>
-      <p class="lead">Apuntes detallados y tests con corrección para SMR, ASIR, DAM y DAW. Gratis y sin registrarte: tu progreso se guarda en este navegador.</p>
+      <h1>Tu ciclo de FP, explicado tema a tema</h1>
+      <p class="lead">Apuntes detallados y tests con corrección para SMR, ASIR, DAM, DAW y Química y Salud Ambiental. Gratis y sin registrarte: tu progreso se guarda en este navegador.</p>
     </section>
     <section class="mapbox">
       <h2>Elige tu línea</h2>
