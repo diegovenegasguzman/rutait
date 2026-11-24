@@ -306,10 +306,12 @@ const COURSES = [
      ]}
    ]}
   ,
-  /* Química y Salud Ambiental (RD 283/2019). Reparto por cursos según la Orden EFP/249/2020 del Ministerio.
-     No se incluyen FOL, EIE ni la FCT, igual que en el resto de cursos. */
+  /* Química y Salud Ambiental (RD 283/2019), con el reparto por cursos de Cataluña (CFPS SMC0)
+     tal como lo imparte el Institut Miquel Martí i Pol, incluidas sus dos optativas (MPO2 y MPO3).
+     No se incluyen los Itineraris personals per a l'ocupabilitat (equivalentes a FOL y EIE),
+     Anglès professional ni la estancia en empresa. */
   {id:"qsa1", short:"1º QSA", family:"QSA", name:"Química y Salud Ambiental", grade:"Grado superior", year:"Primer curso",
-   desc:"Control de aguas, residuos, suelos y aire, gestión ambiental y el trabajo diario de una unidad de salud ambiental.",
+   desc:"Aguas, contaminación atmosférica, organismos nocivos, gestión ambiental, unidad de salud ambiental, digitalización y sostenibilidad. Reparto de Cataluña.",
    modules:[
      {c:"1546", n:"Sistemas de gestión ambiental", u:[
        ["Elementos de un sistema de gestión de calidad", ["gestion-calidad"]],
@@ -324,16 +326,9 @@ const COURSES = [
        ["Tratamiento de aguas potables", ["aguas-potabilizacion"]],
        ["Tratamiento de aguas residuales", ["aguas-residuales"]],
        ["Toma de muestras de aguas", ["aguas-muestreo"]],
-       ["Control de calidad físico-químico", ["aguas-fisicoquimico"]],
+       ["Control de calidad físico-químico", ["aguas-fisicoquimico", "calculos-laboratorio", "tecnicas-instrumentales"]],
        ["Control de calidad microbiológico", ["aguas-microbiologia"]],
        ["Protocolos para minimizar los efectos sobre la salud (legionela)", ["legionela"]]
-     ]},
-     {c:"1549", n:"Control de residuos", u:[
-       ["Fuentes de contaminación del suelo", ["suelos-contaminados"]],
-       ["Sistemas de gestión de residuos sólidos", ["gestion-residuos"]],
-       ["Toma de muestras de suelos y residuos", ["suelos-muestreo"]],
-       ["Análisis de suelos y residuos", ["suelos-muestreo"]],
-       ["Protocolos de actuación", ["suelos-contaminados", "gestion-residuos"]]
      ]},
      {c:"1552", n:"Contaminación ambiental y atmosférica", u:[
        ["Focos de contaminación atmosférica", ["contaminacion-atmosferica"]],
@@ -343,16 +338,36 @@ const COURSES = [
        ["Contaminación de origen físico", ["ruido-radiaciones"]],
        ["Protocolos frente a la contaminación", ["depuracion-emisiones"]]
      ]},
+     {c:"1553", n:"Control de organismos nocivos", u:[
+       ["Inspección de establecimientos", ["plagas-vectores"]],
+       ["Identificación y control de plagas y vectores", ["plagas-vectores", "otras-plagas"]],
+       ["Métodos de lucha y biocidas", ["biocidas"]],
+       ["Toma de muestras de biocidas y vectores", ["biocidas"]],
+       ["Establecimientos y servicios biocidas", ["control-integral-plagas"]],
+       ["Planes de control integral de plagas", ["control-integral-plagas"]]
+     ]},
      {c:"1554", n:"Unidad de salud ambiental", u:[
-       ["La unidad de salud ambiental", ["unidad-salud-ambiental"]],
+       ["La unidad de salud ambiental", ["unidad-salud-ambiental", "salud-publica-catalunya"]],
        ["Documentación sanitaria y medioambiental", ["unidad-salud-ambiental"]],
        ["Gestión de recursos materiales", ["laboratorio-equipos"]],
        ["Preparación y mantenimiento de equipos", ["laboratorio-equipos"]],
        ["Informes y resúmenes de actividad", ["estadistica-informes"]]
+     ]},
+     {c:"1665", n:"Digitalización aplicada a los sectores productivos", u:[
+       ["Transformación digital y tecnologías habilitadoras", ["digitalizacion-sectores"]],
+       ["Herramientas digitales para el trabajo técnico", ["digitalizacion-herramientas"]]
+     ]},
+     {c:"1708", n:"Sostenibilidad aplicada al sistema productivo", u:[
+       ["Desarrollo sostenible y Objetivos de Desarrollo Sostenible", ["sostenibilidad-ods"]],
+       ["Economía circular, huella de carbono y eficiencia", ["economia-circular-huella"]]
+     ]},
+     {c:"MPO2", n:"Taxonomía de organismos nocivos (optativo)", u:[
+       ["Artrópodos de interés sanitario", ["taxonomia-artropodos"]],
+       ["Roedores y otros vertebrados", ["taxonomia-vertebrados"]]
      ]}
    ]},
   {id:"qsa2", short:"2º QSA", family:"QSA", name:"Química y Salud Ambiental", grade:"Grado superior", year:"Segundo curso",
-   desc:"Educación para la salud, medio construido, seguridad alimentaria, control de plagas y el proyecto final.",
+   desc:"Educación para la salud, residuos, medio construido, seguridad alimentaria, análisis de alimentos y el proyecto intermodular. Reparto de Cataluña.",
    modules:[
      {c:"1547", n:"Educación para la salud y el medio ambiente", u:[
        ["Vigilancia epidemiológica", ["vigilancia-epidemiologica"]],
@@ -360,6 +375,13 @@ const COURSES = [
        ["Información sobre problemas de salud ambientales", ["educacion-sanitaria"]],
        ["Técnicas de comunicación", ["comunicacion-salud"]],
        ["Evaluación de programas de educación sanitaria", ["comunicacion-salud"]]
+     ]},
+     {c:"1549", n:"Control de residuos", u:[
+       ["Fuentes de contaminación del suelo", ["suelos-contaminados"]],
+       ["Sistemas de gestión de residuos sólidos", ["gestion-residuos", "residuos-sanitarios"]],
+       ["Toma de muestras de suelos y residuos", ["suelos-muestreo"]],
+       ["Análisis de suelos y residuos", ["suelos-muestreo"]],
+       ["Protocolos de actuación", ["suelos-contaminados", "gestion-residuos"]]
      ]},
      {c:"1550", n:"Salud y riesgos del medio construido", u:[
        ["Inspección y control en el medio construido", ["medio-construido"]],
@@ -370,20 +392,16 @@ const COURSES = [
      ]},
      {c:"1551", n:"Control y seguridad alimentaria", u:[
        ["Inspección y control sanitario de alimentos (APPCC)", ["appcc"]],
-       ["Deficiencias técnico-sanitarias en alimentos", ["contaminacion-alimentos"]],
+       ["Deficiencias técnico-sanitarias en alimentos", ["contaminacion-alimentos", "toxiinfecciones"]],
        ["Toma de muestras de alimentos", ["alimentos-analisis"]],
        ["Análisis de la calidad higiénico-sanitaria", ["alimentos-analisis"]],
        ["Programas formativos y campañas de seguridad alimentaria y consumo", ["seguridad-alimentaria-consumo"]]
      ]},
-     {c:"1553", n:"Control de organismos nocivos", u:[
-       ["Inspección de establecimientos", ["plagas-vectores"]],
-       ["Identificación y control de plagas y vectores", ["plagas-vectores"]],
-       ["Métodos de lucha y biocidas", ["biocidas"]],
-       ["Toma de muestras de biocidas y vectores", ["biocidas"]],
-       ["Establecimientos y servicios biocidas", ["control-integral-plagas"]],
-       ["Planes de control integral de plagas", ["control-integral-plagas"]]
+     {c:"MPO3", n:"Técnicas de análisis alimentario (optativo)", u:[
+       ["Análisis físico-químico de alimentos", ["analisis-alimentos-quimico"]],
+       ["Análisis microbiológico de alimentos", ["analisis-alimentos-micro"]]
      ]},
-     {c:"1555", n:"Proyecto de química y salud ambiental", u:[
+     {c:"1555", n:"Proyecto intermodular de química y salud ambiental", u:[
        ["Planificación, desarrollo y presentación del proyecto", ["proyecto-qsa"]]
      ]}
    ]}

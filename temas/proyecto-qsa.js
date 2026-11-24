@@ -1,11 +1,11 @@
 TEMA("proyecto-qsa", {
- "title": "El proyecto de química y salud ambiental",
+ "title": "El proyecto intermodular de química y salud ambiental",
  "mins": 12,
  "intro": "Cómo plantear, desarrollar y presentar el proyecto final del ciclo.",
  "sections": [
   {
    "h": "Qué es el proyecto",
-   "html": "\n<p>El <b>proyecto</b> es un módulo de segundo curso en el que se integran los conocimientos de todo el ciclo para resolver un problema real del sector. Puede ser, por ejemplo, el diseño de un plan de autocontrol para una piscina, un programa de vigilancia del mosquito tigre en un municipio, un plan de prevención de legionela para un hotel o un estudio de la calidad del agua de varias fuentes públicas.</p>\n<p>Se valoran la aplicación de los contenidos, la autonomía, el trabajo en equipo si se hace en grupo, la calidad de la documentación y la defensa oral.</p>"
+   "html": "\n<p>El <b>proyecto intermodular</b> es un módulo de segundo curso en el que se integran los conocimientos de todo el ciclo para resolver un problema real del sector. Puede ser, por ejemplo, el diseño de un plan de autocontrol para una piscina, un programa de vigilancia del mosquito tigre en un municipio, un plan de prevención de legionela para un hotel o un estudio de la calidad del agua de varias fuentes públicas.</p>\n<p>Se valoran la aplicación de los contenidos, la autonomía, el trabajo en equipo si se hace en grupo, la calidad de la documentación y la defensa oral.</p>"
   },
   {
    "h": "Fases del proyecto",
