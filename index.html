@@ -546,6 +546,7 @@ function bindStickers(){
     P.branch = b.dataset.b; save();
     const y = scrollY; app.innerHTML = viewHome(); window.scrollTo({top:y});
     document.body.classList.add("anim"); bindMap(); bindStickers();
+    const pl = document.querySelector('.menu a[data-r="practicas"]'); if(pl) pl.hidden = curBranch().id !== "it";
     const f = document.querySelector(`.sticker[data-b="${b.dataset.b}"]`); if(f) f.focus({preventScroll:true});
   }));
 }
@@ -810,7 +811,7 @@ function practicasDe(c){
   return ALLP.filter(p => temas.has(p.tema));
 }
 function viewPracticas(c){
-  const chips = COURSES.map(o => `<a href="#practicas-${o.id}" class="${o.id===c.id?"on":""}">${o.short}</a>`).join("");
+  const chips = COURSES.filter(o => branchOf(o).id === "it").map(o => `<a href="#practicas-${o.id}" class="${o.id===c.id?"on":""}">${o.short}</a>`).join("");
   const list = practicasDe(c);
   const card = p => `<a class="mcard pcard" href="${pHash(p.key)}">
       <span class="ptag ${p.reto?"reto":""}">${p.reto ? "Reto" : OSNAME[p.d.os||"linux"]}</span>
@@ -1517,12 +1518,14 @@ function render(keep){
   else if((m = r.match(/^modulo-(\w+)-(\w+)$/)) && course(m[1]) && course(m[1]).modules.find(x=>x.c===m[2])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewModule(currentCourse, currentCourse.modules.find(x=>x.c===m[2])); }
   else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); bindChecks(m[1]); bindTerms(m[1]); }
   else if((m = r.match(/^test-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTest(m[1]); bindTest(); animateResult(); }
-  else if((m = r.match(/^practicas(?:-(\w+))?$/))){ tab="practicas"; if(m[1] && course(m[1])) currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewPracticas(currentCourse); }
+  else if((m = r.match(/^practicas(?:-(\w+))?$/))){ tab="practicas"; if(m[1] && course(m[1])) currentCourse = course(m[1]); if(branchOf(currentCourse).id !== "it") currentCourse = COURSES.find(o => o.id === P.lastIT) || COURSES[0]; P.lastIT = currentCourse.id; save(); setColor(currentCourse); app.innerHTML = viewPracticas(currentCourse); }
   else if((m = r.match(/^practica-([\w-]+)~(r?\d+)$/)) && ALLP.find(x=>x.key===m[1]+":"+m[2])){ tab="practicas"; const pr = ALLP.find(x=>x.key===m[1]+":"+m[2]); ensureCourse(pr.tema); setColor(currentCourse); app.innerHTML = viewPractica(pr); const el = document.querySelector(".pwrap .term"); bindTerm(el, pr.d, pr.key, "tema", ()=>{}, true); }
   else if(r==="escuchar"){ tab="escuchar"; setColor(currentCourse); app.innerHTML = viewLector(); bindLector(); }
   else if(r==="herramientas"){ tab="herramientas"; setColor(null); app.innerHTML = viewTools(); bindTools(); }
   else { setColor(null); app.innerHTML = viewHome(); if(firstHome && !reduce){ document.body.classList.add("anim"); } firstHome = false; bindMap(); bindStickers(); }
   document.querySelectorAll(".menu a").forEach(a=>a.classList.toggle("on", a.dataset.r===tab));
+  // «Prácticas» solo existe para la rama de Informática
+  const pl = document.querySelector('.menu a[data-r="practicas"]'); if(pl) pl.hidden = curBranch().id !== "it";
   setupReading(r.startsWith("tema-"));
 }
 function ensureCourse(t){ if(!currentCourse.modules.some(m=>m.t.includes(t))) currentCourse = COURSES.find(c=>c.modules.some(m=>m.t.includes(t))); }
