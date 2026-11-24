@@ -40,7 +40,17 @@ button{font:inherit;cursor:pointer;color:inherit}
 .hero{padding:64px 0 24px}
 .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,6.4vw,76px);line-height:1;letter-spacing:-.035em;max-width:13ch}
 .hero p.lead{font-size:20px;color:var(--ink2);max-width:52ch;margin-top:22px}
-.mapbox{margin-top:40px;background:var(--white);border:1px solid var(--rule);border-radius:28px;padding:28px 28px 18px;position:relative;overflow:hidden}
+.stickers{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.sticker{--bc:var(--ink);display:flex;align-items:center;gap:12px;padding:12px 20px 12px 14px;border-radius:18px;border:2px dashed color-mix(in srgb,var(--bc) 45%,transparent);background:var(--white);color:var(--ink);font:inherit;text-align:left;cursor:pointer;transform:rotate(var(--rot));box-shadow:0 3px 0 color-mix(in srgb,var(--bc) 25%,transparent);transition:transform .15s,box-shadow .15s,background .15s}
+.sticker:hover{transform:rotate(0deg) translateY(-2px)}
+.sticker:focus-visible{outline:3px solid var(--bc);outline-offset:3px}
+.sticker svg{width:34px;height:34px;flex:none;color:var(--bc)}
+.sticker b{display:block;font-family:var(--display);font-size:18px;letter-spacing:-.01em;line-height:1.15}
+.sticker small{display:block;font-size:13.5px;color:var(--ink3);font-weight:700;margin-top:1px}
+.sticker.on{background:var(--bc);border:2px solid var(--bc);color:#fff;transform:rotate(0deg);box-shadow:0 6px 16px color-mix(in srgb,var(--bc) 35%,transparent)}
+.sticker.on svg,.sticker.on small{color:#fff}
+@media (prefers-reduced-motion:reduce){.sticker{transition:none}}
+.mapbox{margin-top:22px;background:var(--white);border:1px solid var(--rule);border-radius:28px;padding:28px 28px 18px;position:relative;overflow:hidden}
 .mapbox h2{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:-.01em}
 .mapbox .hint{color:var(--ink3);font-size:15px;margin-top:2px}
 #map{width:100%;height:auto;display:block;margin-top:10px}
@@ -484,7 +494,29 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* =========================================================
    MAPA DE LÍNEAS (portada)
    ========================================================= */
-function mapSVG(){
+/* Ramas profesionales: cada una agrupa sus cursos y tiene su propio mapa */
+const BRANCHES = [
+  {id:"it", label:"Informática", sub:"SMR, ASIR, DAM y DAW", fams:["SMR","ASIR","DAM","DAW"], col:"var(--asir1)",
+   icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'},
+  {id:"qsa", label:"Química y Salud Ambiental", sub:"QSA", fams:["QSA"], col:"var(--qsa1)",
+   icon:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2.5h6M10 2.5v6.2L4.6 18.4A2.2 2.2 0 0 0 6.5 21.5h11a2.2 2.2 0 0 0 1.9-3.1L14 8.7V2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7.2 15h9.6" stroke="currentColor" stroke-width="2"/><circle cx="10.5" cy="18" r="1.1" fill="currentColor"/><circle cx="14" cy="17.2" r="0.9" fill="currentColor"/></svg>'}
+];
+const branchOf = c => BRANCHES.find(b => b.fams.includes(c.family)) || BRANCHES[0];
+const curBranch = () => BRANCHES.find(b => b.id === P.branch) || BRANCHES[0];
+function mapSVG(){ return curBranch().id === "qsa" ? mapQSA() : mapIT(); }
+function mapQSA(){
+  const spread = (n,x0,x1) => Array.from({length:n},(_,i)=> n===1 ? (x0+x1)/2 : x0 + (x1-x0)*i/(n-1));
+  const st = (x,y,cid,title,delay) => `<circle class="st" cx="${x}" cy="${y}" r="9" stroke="var(--${cid})" style="animation-delay:${delay}s"><title>${title}</title></circle>`;
+  const g = (cid, inner) => `<g class="grp" data-c="${cid}" tabindex="0" role="link" aria-label="${course(cid).short}: ${course(cid).name}">${inner}</g>`;
+  const lbl = (x,y,txt,col,d) => `<text class="lbl" x="${x}" y="${y}" fill="${col}" style="animation-delay:${d}s">${txt}</text>`;
+  const line = (cid, d, delay) => `<path class="ln" pathLength="1" d="${d}" stroke="var(--${cid})" style="animation-delay:${delay}s"/>`;
+  const mods = cid => course(cid).modules;
+  let out = "";
+  out += g("qsa1", line("qsa1","M60 80 H500",0) + spread(mods("qsa1").length,60,440).map((x,i)=>st(x,80,"qsa1",mods("qsa1")[i].n,.6+i*.05)).join("") + lbl(60,50,course("qsa1").short,"var(--qsa1)",.5));
+  out += g("qsa2", line("qsa2","M500 80 H940",.25) + spread(mods("qsa2").length,560,940).map((x,i)=>st(x,80,"qsa2",mods("qsa2")[i].n,.8+i*.05)).join("") + lbl(560,50,course("qsa2").short,"var(--qsa2)",.7));
+  return `<svg id="map" viewBox="0 0 1000 110" role="img" aria-label="Mapa de Química y Salud Ambiental: cada línea es un curso y cada parada, un módulo">${out}</svg>`;
+}
+function mapIT(){
   const spread = (n,x0,x1) => Array.from({length:n},(_,i)=> n===1 ? (x0+x1)/2 : x0 + (x1-x0)*i/(n-1));
   const st = (x,y,cid,title,delay) => `<circle class="st" cx="${x}" cy="${y}" r="9" stroke="var(--${cid})" style="animation-delay:${delay}s"><title>${title}</title></circle>`;
   const g = (cid, inner) => `<g class="grp" data-c="${cid}" tabindex="0" role="link" aria-label="${course(cid).short}: ${course(cid).name}">${inner}</g>`;
@@ -506,10 +538,16 @@ function mapSVG(){
   out += `<g class="grp" data-c="dam1" tabindex="-1">` + trunk.map((x,i)=>`<rect class="st" x="${x-10}" y="252" width="20" height="38" rx="10" stroke="var(--ink)" style="animation-delay:${1.2+i*.05}s"><title>${mods("dam1")[i].n} (común a 1º DAM y 1º DAW)</title></rect>`).join("") + `</g>`
     + lbl(60,236,"1º DAM y 1º DAW","var(--ink)",1.1)
     + `<text class="sublbl" x="60" y="318" style="animation-delay:1.2s">Primer curso común</text>`;
-  // QSA: primer curso a la izquierda, segundo a la derecha
-  out += g("qsa1", line("qsa1","M60 420 H500",.5) + spread(mods("qsa1").length,60,440).map((x,i)=>st(x,420,"qsa1",mods("qsa1")[i].n,1.6+i*.05)).join("") + lbl(60,390,course("qsa1").short,"var(--qsa1)",1.5));
-  out += g("qsa2", line("qsa2","M500 420 H940",.6) + spread(mods("qsa2").length,560,940).map((x,i)=>st(x,420,"qsa2",mods("qsa2")[i].n,1.7+i*.05)).join("") + lbl(560,390,course("qsa2").short,"var(--qsa2)",1.6));
-  return `<svg id="map" viewBox="0 0 1000 450" role="img" aria-label="Mapa de cursos: cada línea es un curso y cada parada, un módulo">${out}</svg>`;
+  return `<svg id="map" viewBox="0 0 1000 360" role="img" aria-label="Mapa de Informática: cada línea es un curso y cada parada, un módulo">${out}</svg>`;
+}
+function bindStickers(){
+  document.querySelectorAll(".sticker").forEach(b => b.addEventListener("click", () => {
+    if(P.branch === b.dataset.b) return;
+    P.branch = b.dataset.b; save();
+    const y = scrollY; app.innerHTML = viewHome(); window.scrollTo({top:y});
+    document.body.classList.add("anim"); bindMap(); bindStickers();
+    const f = document.querySelector(`.sticker[data-b="${b.dataset.b}"]`); if(f) f.focus({preventScroll:true});
+  }));
 }
 function bindMap(){
   const svg = document.getElementById("map"); if(!svg) return;
@@ -531,7 +569,9 @@ const app = document.getElementById("app");
 let firstHome = true;
 
 function viewHome(){
-  const cards = COURSES.map(c=>{
+  const br = curBranch();
+  const stickers = BRANCHES.map((b, k) => `<button type="button" class="sticker ${b.id===br.id ? "on" : ""}" data-b="${b.id}" aria-pressed="${b.id===br.id}" style="--bc:${b.col};--rot:${k % 2 ? 1.5 : -1.5}deg">${b.icon}<span><b>${b.label}</b><small>${b.sub}</small></span></button>`).join("");
+  const cards = COURSES.filter(c => br.fams.includes(c.family)).map(c=>{
     const s = courseStats(c);
     return `<a class="ccard" href="#curso-${c.id}" style="--cc:${color(c)}">
       <b>${c.short}</b><span>${c.name}</span>
@@ -540,10 +580,11 @@ function viewHome(){
   return `<div class="wrap">
     <section class="hero">
       <h1>Tu ciclo de FP, explicado tema a tema</h1>
-      <p class="lead">Apuntes detallados y tests con corrección para SMR, ASIR, DAM, DAW y Química y Salud Ambiental. Gratis y sin registrarte: tu progreso se guarda en este navegador.</p>
+      <p class="lead">Apuntes detallados y tests con corrección para los ciclos de informática y de Química y Salud Ambiental. Elige tu rama y después tu curso. Gratis y sin registrarte: tu progreso se guarda en este navegador.</p>
     </section>
-    <section class="mapbox">
-      <h2>Elige tu línea</h2>
+    <div class="stickers" role="group" aria-label="Rama profesional">${stickers}</div>
+    <section class="mapbox" style="--bc:${br.col}">
+      <h2>Las líneas de ${br.label}</h2>
       <p class="hint">Cada línea es un curso y cada parada, uno de sus módulos. Pulsa una línea para ver sus temas.</p>
       ${mapSVG()}
     </section>
@@ -1472,7 +1513,7 @@ function render(keep){
   lastRoute = r;
   document.body.classList.remove("anim");
   let tab = "inicio";
-  if((m = r.match(/^curso-(\w+)$/)) && course(m[1])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewCourse(currentCourse); }
+  if((m = r.match(/^curso-(\w+)$/)) && course(m[1])){ currentCourse = course(m[1]); P.branch = branchOf(currentCourse).id; save(); setColor(currentCourse); app.innerHTML = viewCourse(currentCourse); }
   else if((m = r.match(/^modulo-(\w+)-(\w+)$/)) && course(m[1]) && course(m[1]).modules.find(x=>x.c===m[2])){ currentCourse = course(m[1]); setColor(currentCourse); app.innerHTML = viewModule(currentCourse, currentCourse.modules.find(x=>x.c===m[2])); }
   else if((m = r.match(/^tema-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTema(m[1]); bindChecks(m[1]); bindTerms(m[1]); }
   else if((m = r.match(/^test-([\w-]+)$/)) && TEMAS[m[1]]){ ensureCourse(m[1]); setColor(currentCourse); app.innerHTML = viewTest(m[1]); bindTest(); animateResult(); }
@@ -1480,7 +1521,7 @@ function render(keep){
   else if((m = r.match(/^practica-([\w-]+)~(r?\d+)$/)) && ALLP.find(x=>x.key===m[1]+":"+m[2])){ tab="practicas"; const pr = ALLP.find(x=>x.key===m[1]+":"+m[2]); ensureCourse(pr.tema); setColor(currentCourse); app.innerHTML = viewPractica(pr); const el = document.querySelector(".pwrap .term"); bindTerm(el, pr.d, pr.key, "tema", ()=>{}, true); }
   else if(r==="escuchar"){ tab="escuchar"; setColor(currentCourse); app.innerHTML = viewLector(); bindLector(); }
   else if(r==="herramientas"){ tab="herramientas"; setColor(null); app.innerHTML = viewTools(); bindTools(); }
-  else { setColor(null); app.innerHTML = viewHome(); if(firstHome && !reduce){ document.body.classList.add("anim"); } firstHome = false; bindMap(); }
+  else { setColor(null); app.innerHTML = viewHome(); if(firstHome && !reduce){ document.body.classList.add("anim"); } firstHome = false; bindMap(); bindStickers(); }
   document.querySelectorAll(".menu a").forEach(a=>a.classList.toggle("on", a.dataset.r===tab));
   setupReading(r.startsWith("tema-"));
 }
